@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         My Toolbox Loader
 // @namespace    local.my.toolbox
-// @version      0.1.0
+// @version      0.1.1
 // @description  Dev loader for local userscript development.
 // @author       Codex
-// @match        *://*/*
+// @match        https://tempmail.plus/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==

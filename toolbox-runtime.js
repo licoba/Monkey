@@ -1,6 +1,8 @@
 (function () {
   'use strict';
 
+  const TOOLBOX_VERSION = '0.1.1';
+
   const Utils = {
     addStyle(id, cssText) {
       if (document.getElementById(id)) {
@@ -119,6 +121,20 @@
             hide(node);
           });
         });
+      },
+    },
+    // Site module template:
+    // 1. Copy this block.
+    // 2. Replace name / match / run.
+    // 3. Add the site's @match rule to the userscript header.
+    {
+      name: 'github.com-template',
+      match() {
+        return location.hostname === 'github.com';
+      },
+      run() {
+        // Example:
+        // Utils.addStyle('toolbox-github-demo', '.AppHeader { outline: 1px solid red !important; }');
       },
     },
     {

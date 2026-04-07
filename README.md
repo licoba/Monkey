@@ -5,6 +5,7 @@
 - 一个总脚本 `my-toolbox.user.js`
 - 每个网站一个模块
 - 每个模块都实现 `match()` 和 `run()`
+- 默认使用白名单模式，只对 `@match` 里列出的网站注入
 
 ## 当前已包含
 
@@ -34,6 +35,10 @@
 - `toolbox-runtime.js`
 - `dev-server.js`
 
+当前开发加载器只对白名单网站生效：
+
+- `https://tempmail.plus/*`
+
 ## 生产模式
 
 如果你以后想脱离本地服务单独使用，还是可以安装：
@@ -42,6 +47,10 @@
 
 这是完整独立版，不依赖本地服务器，但开发时没有自动刷新。
 
+当前独立版也只对白名单网站生效：
+
+- `https://tempmail.plus/*`
+
 ## 后续新增网站
 
 在 `modules` 数组里复制一个对象，改这三部分：
@@ -49,6 +58,10 @@
 - `name`
 - `match()`
 - `run()`
+
+如果要让脚本对新网站注入，除了新增模块，还要在脚本头部新增对应的 `@match`。
+
+你现在可以直接复制 [toolbox-runtime.js](E:\projects\monkey\toolbox-runtime.js) 里的 `github.com-template` 或 `example.com-template` 模块。
 
 示例：
 
@@ -62,6 +75,12 @@
     console.log('your github logic here');
   },
 }
+```
+
+例如要新增 GitHub：
+
+```javascript
+// @match        https://github.com/*
 ```
 
 ## 常用模式

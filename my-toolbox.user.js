@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         My Toolbox
 // @namespace    local.my.toolbox
-// @version      0.1.0
+// @version      0.1.1
 // @description  Personal userscript toolbox with per-site modules.
 // @author       Codex
-// @match        *://*/*
+// @match        https://tempmail.plus/*
 // @downloadURL  http://127.0.0.1:8123/my-toolbox.user.js
 // @updateURL    http://127.0.0.1:8123/my-toolbox.user.js
 // @run-at       document-start
@@ -13,6 +13,8 @@
 
 (function () {
   'use strict';
+
+  const TOOLBOX_VERSION = '0.1.1';
 
   const Utils = {
     addStyle(id, cssText) {
