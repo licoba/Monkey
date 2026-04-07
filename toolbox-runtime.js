@@ -123,6 +123,45 @@
         });
       },
     },
+    {
+      name: '2925.com-hide-left-adv',
+      match() {
+        return (
+          location.hostname === '2925.com' &&
+          location.hash.startsWith('#/mailList')
+        );
+      },
+      run() {
+        const styleId = 'toolbox-2925-hide-left-adv';
+        const removeSelectors = [
+          '.left-adv',
+        ];
+
+        Utils.addStyle(
+          styleId,
+          `${removeSelectors.join(',\n')} {
+            display: none !important;
+          }`
+        );
+
+        const hide = (root = document) => {
+          Utils.removeSelectors(removeSelectors, root);
+        };
+
+        Utils.onReady(() => {
+          hide();
+
+          Utils.observeAddedNodes((node) => {
+            if (node.matches?.(removeSelectors.join(','))) {
+              hide(node.parentElement || document);
+              return;
+            }
+
+            hide(node);
+          });
+        });
+      },
+    },
     // Site module template:
     // 1. Copy this block.
     // 2. Replace name / match / run.

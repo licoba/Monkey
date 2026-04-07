@@ -5,6 +5,7 @@
 // @description  Dev loader for local userscript development.
 // @author       Codex
 // @match        https://tempmail.plus/*
+// @match        https://2925.com/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -40,6 +41,16 @@
           pointer-events: none !important;
         }
         .info.mb-50.mb-xl-70 {
+          display: none !important;
+        }
+      `,
+    },
+    {
+      match: () =>
+        location.hostname === '2925.com' &&
+        location.hash.startsWith('#/mailList'),
+      css: `
+        .left-adv {
           display: none !important;
         }
       `,

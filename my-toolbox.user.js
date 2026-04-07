@@ -5,6 +5,7 @@
 // @description  Personal userscript toolbox with per-site modules.
 // @author       Codex
 // @match        https://tempmail.plus/*
+// @match        https://2925.com/*
 // @downloadURL  http://127.0.0.1:8123/my-toolbox.user.js
 // @updateURL    http://127.0.0.1:8123/my-toolbox.user.js
 // @run-at       document-start
@@ -127,6 +128,45 @@
 
           Utils.observeAddedNodes((node) => {
             if (node.matches?.([...hideSelectors, ...removeSelectors].join(','))) {
+              hide(node.parentElement || document);
+              return;
+            }
+
+            hide(node);
+          });
+        });
+      },
+    },
+    {
+      name: '2925.com-hide-left-adv',
+      match() {
+        return (
+          location.hostname === '2925.com' &&
+          location.hash.startsWith('#/mailList')
+        );
+      },
+      run() {
+        const styleId = 'toolbox-2925-hide-left-adv';
+        const removeSelectors = [
+          '.left-adv',
+        ];
+
+        Utils.addStyle(
+          styleId,
+          `${removeSelectors.join(',\n')} {
+            display: none !important;
+          }`
+        );
+
+        const hide = (root = document) => {
+          Utils.removeSelectors(removeSelectors, root);
+        };
+
+        Utils.onReady(() => {
+          hide();
+
+          Utils.observeAddedNodes((node) => {
+            if (node.matches?.(removeSelectors.join(','))) {
               hide(node.parentElement || document);
               return;
             }
