@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         FusionToolBox
 // @namespace    local.fusion.toolbox
-// @version      0.1.1
-// @description  Personal userscript toolbox with per-site modules.
+// @version      0.1.4
+// @description  Personal FusionToolBox userscript with per-site modules.
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*

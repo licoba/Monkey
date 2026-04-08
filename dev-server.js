@@ -6,9 +6,9 @@ const host = '127.0.0.1';
 const port = 8123;
 const root = __dirname;
 const watchedFiles = [
-  'toolbox-runtime.js',
-  'my-toolbox.user.js',
-  'my-toolbox.loader.user.js',
+  'FusionToolBox.runtime.js',
+  'FusionToolBox.user.js',
+  'FusionToolBox.loader.user.js',
   'README.md',
 ];
 
@@ -59,10 +59,10 @@ function serveFile(req, res, fileName) {
 
 const devClientScript = `
 (function () {
-  if (window.__toolboxDevClientLoaded) {
+  if (window.__fusionToolBoxDevClientLoaded) {
     return;
   }
-  window.__toolboxDevClientLoaded = true;
+  window.__fusionToolBoxDevClientLoaded = true;
 
   const source = new EventSource('http://127.0.0.1:8123/events');
   source.addEventListener('reload', () => {

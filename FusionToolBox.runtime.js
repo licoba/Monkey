@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const TOOLBOX_VERSION = '0.1.1';
+  const FUSION_TOOLBOX_VERSION = '0.1.3';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -68,7 +68,7 @@
         return location.hostname === 'tempmail.plus';
       },
       run() {
-        const styleId = 'toolbox-tempmail-plus-hide-ads';
+        const styleId = 'fusion-toolbox-tempmail-plus-hide-ads';
         const hideSelectors = [
           '#email > .title',
           'header .d-flex.flex-row.align-items-center > .d-none.d-md-block',
@@ -132,7 +132,7 @@
         );
       },
       run() {
-        const styleId = 'toolbox-2925-hide-left-adv';
+        const styleId = 'fusion-toolbox-2925-hide-left-adv';
         const removeSelectors = [
           '.left-adv',
         ];
@@ -173,7 +173,7 @@
       },
       run() {
         // Example:
-        // Utils.addStyle('toolbox-github-demo', '.AppHeader { outline: 1px solid red !important; }');
+        // Utils.addStyle('fusion-toolbox-github-demo', '.AppHeader { outline: 1px solid red !important; }');
       },
     },
     {

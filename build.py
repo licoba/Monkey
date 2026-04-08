@@ -6,9 +6,10 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent
 HEADER_PATH = ROOT / "userscript-header.txt"
-RUNTIME_PATH = ROOT / "toolbox-runtime.js"
-DEFAULT_OUTPUT_PATH = ROOT / "my-toolbox.user.js"
+RUNTIME_PATH = ROOT / "FusionToolBox.runtime.js"
+DEFAULT_OUTPUT_PATH = ROOT / "FusionToolBox.user.js"
 REQUIRED_META_KEYS = ("@name", "@namespace", "@version", "@description")
+SEMVER_PATTERN = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
 
 
 def read_text(path: pathlib.Path) -> str:
@@ -56,21 +57,68 @@ def sync_runtime_version(runtime: str, version: str) -> str:
     lines = runtime.splitlines()
 
     for index, line in enumerate(lines):
-        if "const TOOLBOX_VERSION =" not in line:
+        if "const FUSION_TOOLBOX_VERSION =" not in line:
             continue
         indent = line[: len(line) - len(line.lstrip())]
-        lines[index] = f"{indent}const TOOLBOX_VERSION = '{version}';"
+        lines[index] = f"{indent}const FUSION_TOOLBOX_VERSION = '{version}';"
         return "\n".join(lines)
 
-    raise ValueError("toolbox-runtime.js 中未找到 TOOLBOX_VERSION")
+    raise ValueError("FusionToolBox.runtime.js 中未找到 FUSION_TOOLBOX_VERSION")
 
 
 def build_output(header: str, runtime: str) -> str:
     return (
         f"{header.rstrip()}\n\n"
-        "// Built from toolbox-runtime.js via build.py.\n"
+        "// Built from FusionToolBox.runtime.js via build.py.\n"
         f"{runtime.lstrip().rstrip()}\n"
     )
+
+
+def parse_semver(version: str) -> tuple[int, int, int]:
+    match = SEMVER_PATTERN.fullmatch(version)
+    if not match:
+        raise ValueError(f"当前版本不是 x.y.z 格式，无法自动递增：{version}")
+    return tuple(int(part) for part in match.groups())
+
+
+def bump_version(version: str, bump_type: str) -> str:
+    major, minor, patch = parse_semver(version)
+
+    if bump_type == "patch":
+        return f"{major}.{minor}.{patch + 1}"
+    if bump_type == "minor":
+        return f"{major}.{minor + 1}.0"
+    if bump_type == "major":
+        return f"{major + 1}.0.0"
+
+    raise ValueError(f"不支持的版本递增类型：{bump_type}")
+
+
+def prompt_choice(prompt: str, valid_choices: set[str]) -> str:
+    while True:
+        value = input(prompt).strip().lower()
+        if value in valid_choices:
+            return value
+        display_choices = [choice if choice else "Enter" for choice in sorted(valid_choices)]
+        print(f"请输入以下选项之一：{', '.join(display_choices)}")
+
+
+def prompt_for_version(current_version: str) -> str | None:
+    print(f"当前版本：{current_version}")
+    should_bump = prompt_choice("是否升级版本号？[Y/n]: ", {"", "y", "n"})
+
+    if should_bump not in {"", "y"}:
+        return None
+
+    try:
+        next_version = bump_version(current_version, "patch")
+    except ValueError:
+        raise ValueError(
+            f"当前版本 {current_version} 不是 x.y.z 格式，无法自动加版本号，请改用 --version 手工指定。"
+        )
+
+    print(f"版本号将自动升级到：{next_version}")
+    return next_version
 
 
 def parse_args() -> argparse.Namespace:
@@ -102,6 +150,13 @@ def main() -> int:
 
     validate_header(header)
 
+    current_version = extract_version(header)
+
+    if not args.version and not args.check and sys.stdin.isatty():
+        selected_version = prompt_for_version(current_version)
+        if selected_version:
+            args.version = selected_version
+
     if args.version:
         header = replace_header_version(header, args.version)
         write_text(HEADER_PATH, header)
@@ -125,7 +180,7 @@ def main() -> int:
     print(f"Script: FusionToolBox")
     print(f"Version: {version}")
     print(f"Output: {output_path}")
-    print("Next: paste the built file into https://greasyfork.org/zh-CN/scripts/new")
+    print("Next: paste the built file into https://greasyfork.org/zh-CN/script_versions/new")
     return 0
 
 

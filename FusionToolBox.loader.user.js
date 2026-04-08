@@ -77,6 +77,6 @@
   }
 
   injectCriticalStyles();
-  injectScript(`${baseUrl}/toolbox-runtime.js`);
+  injectScript(`${baseUrl}/FusionToolBox.runtime.js`);
   injectScript(`${baseUrl}/dev-client.js`);
 })();

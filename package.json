@@ -1,5 +1,5 @@
 {
-  "name": "my-toolbox-userscript",
+  "name": "fusion-toolbox-userscript",
   "private": true,
   "scripts": {
     "build": "python build.py"
