@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         My Toolbox Loader
-// @namespace    local.my.toolbox
+// @name         FusionToolBox Loader
+// @namespace    local.fusion.toolbox
 // @version      0.1.1
 // @description  Dev loader for local userscript development.
 // @author       Codex

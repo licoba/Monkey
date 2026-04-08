@@ -1,4 +1,4 @@
-# My Toolbox Userscript Template
+# FusionToolBox Userscript Template
 
 这是一个自用油猴脚本模板，思路是：
 
@@ -41,9 +41,46 @@
 - `https://tempmail.plus/*`
 - `https://2925.com/*`
 
+## 发布工作流
+
+推荐工作流：
+
+1. 开发时运行本地服务，使用 `my-toolbox.loader.user.js`
+2. 调试完成后执行构建命令生成发布版 `my-toolbox.user.js`
+3. 把生成后的 `my-toolbox.user.js` 发布到 Greasy Fork
+
+### 构建发布版
+
+前提：本机已安装 Node.js。
+
+在项目根目录执行：
+
+```powershell
+npm run build
+```
+
+这个命令会：
+
+- 读取 `userscript-header.txt`
+- 读取 `toolbox-runtime.js`
+- 自动生成发布文件 `my-toolbox.user.js`
+
+以后不要手工维护 `my-toolbox.user.js` 的脚本逻辑，逻辑统一写在 `toolbox-runtime.js`。
+
+### 发布到 Greasy Fork
+
+1. 确认 `userscript-header.txt` 里的 `@version` 已递增
+2. 运行 `npm run build`
+3. 打开 <https://greasyfork.org/zh-CN/scripts/new>
+4. 粘贴 `my-toolbox.user.js` 内容并提交
+
+后续每次发新版本也按这个流程走。
+
+版本号以 `userscript-header.txt` 为准，构建时会自动同步到发布文件里的 `TOOLBOX_VERSION`。
+
 ## 生产模式
 
-如果你以后想脱离本地服务单独使用，还是可以安装：
+如果你以后想脱离本地服务单独使用，安装：
 
 - `my-toolbox.user.js`
 

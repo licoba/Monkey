@@ -1,17 +1,17 @@
 // ==UserScript==
-// @name         My Toolbox
-// @namespace    local.my.toolbox
+// @name         FusionToolBox
+// @namespace    local.fusion.toolbox
 // @version      0.1.1
 // @description  Personal userscript toolbox with per-site modules.
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
-// @downloadURL  http://127.0.0.1:8123/my-toolbox.user.js
-// @updateURL    http://127.0.0.1:8123/my-toolbox.user.js
 // @run-at       document-start
 // @grant        none
+// @license      MIT
 // ==/UserScript==
 
+// Built from toolbox-runtime.js via build-release.js.
 (function () {
   'use strict';
 
@@ -176,6 +176,20 @@
         });
       },
     },
+    // Site module template:
+    // 1. Copy this block.
+    // 2. Replace name / match / run.
+    // 3. Add the site's @match rule to the userscript header.
+    {
+      name: 'github.com-template',
+      match() {
+        return location.hostname === 'github.com';
+      },
+      run() {
+        // Example:
+        // Utils.addStyle('toolbox-github-demo', '.AppHeader { outline: 1px solid red !important; }');
+      },
+    },
     {
       name: 'example.com-template',
       match() {
@@ -193,3 +207,4 @@
     }
   }
 })();
+
