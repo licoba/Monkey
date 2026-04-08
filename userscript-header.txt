@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name         FusionToolBox
+// @name:zh-CN   FusionToolBox 广告拦截增强
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.5
+// @version      0.1.6
 // @description  Personal FusionToolBox userscript with per-site modules.
+// @description:zh-CN  为 2925.com 和 tempmail.plus 提供广告隐藏与页面增强
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
