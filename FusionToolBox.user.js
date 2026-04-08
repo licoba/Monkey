@@ -2,12 +2,13 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.8
+// @version      0.1.9
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
+// @match        https://www.meiguodizhi.com/*
 // @run-at       document-start
 // @grant        none
 // @license      MIT
@@ -17,7 +18,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.8';
+  const FUSION_TOOLBOX_VERSION = '0.1.9';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -173,6 +174,92 @@
             }
 
             hide(node);
+          });
+        });
+      },
+    },
+    {
+      name: 'meiguodizhi.com-hide-right-ad-iframe',
+      match() {
+        return location.hostname === 'www.meiguodizhi.com';
+      },
+      run() {
+        const styleId = 'fusion-toolbox-meiguodizhi-hide-right-ad-iframe';
+
+        Utils.addStyle(
+          styleId,
+          `iframe[style*="position: fixed"][style*="z-index: 2147483647"][style*="max-width: 420px"][style*="height: 190px"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+          }`
+        );
+
+        function isTargetAdFrame(node) {
+          if (!(node instanceof HTMLIFrameElement)) {
+            return false;
+          }
+
+          const style = node.style;
+          const rect = node.getBoundingClientRect();
+
+          return (
+            style.position === 'fixed' &&
+            style.background === 'transparent' &&
+            style.maxWidth === '420px' &&
+            style.height === '190px' &&
+            style.width === '100%' &&
+            style.zIndex === '2147483647' &&
+            rect.top <= 30 &&
+            rect.right >= window.innerWidth - 5 &&
+            rect.height >= 150 &&
+            rect.width >= 300
+          );
+        }
+
+        function hideFrame(node) {
+          node.style.setProperty('display', 'none', 'important');
+          node.style.setProperty('visibility', 'hidden', 'important');
+          node.style.setProperty('opacity', '0', 'important');
+          node.style.setProperty('pointer-events', 'none', 'important');
+        }
+
+        function hideFrames(root = document) {
+          const scope = root instanceof HTMLElement ? root : document;
+          const nodes =
+            scope === document
+              ? document.querySelectorAll('iframe')
+              : scope.querySelectorAll('iframe');
+
+          for (const node of nodes) {
+            if (!isTargetAdFrame(node)) {
+              continue;
+            }
+            hideFrame(node);
+          }
+
+          if (scope instanceof HTMLIFrameElement && isTargetAdFrame(scope)) {
+            hideFrame(scope);
+          }
+        }
+
+        Utils.onReady(() => {
+          hideFrames();
+
+          Utils.observeAddedNodes((node) => {
+            hideFrames(node);
+          });
+
+          const observer = new MutationObserver(() => {
+            hideFrames();
+          });
+
+          observer.observe(document.documentElement, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style'],
           });
         });
       },

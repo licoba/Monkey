@@ -6,6 +6,7 @@
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
+// @match        https://www.meiguodizhi.com/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==

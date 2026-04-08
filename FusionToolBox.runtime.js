@@ -161,6 +161,92 @@
         });
       },
     },
+    {
+      name: 'meiguodizhi.com-hide-right-ad-iframe',
+      match() {
+        return location.hostname === 'www.meiguodizhi.com';
+      },
+      run() {
+        const styleId = 'fusion-toolbox-meiguodizhi-hide-right-ad-iframe';
+
+        Utils.addStyle(
+          styleId,
+          `iframe[style*="position: fixed"][style*="z-index: 2147483647"][style*="max-width: 420px"][style*="height: 190px"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+          }`
+        );
+
+        function isTargetAdFrame(node) {
+          if (!(node instanceof HTMLIFrameElement)) {
+            return false;
+          }
+
+          const style = node.style;
+          const rect = node.getBoundingClientRect();
+
+          return (
+            style.position === 'fixed' &&
+            style.background === 'transparent' &&
+            style.maxWidth === '420px' &&
+            style.height === '190px' &&
+            style.width === '100%' &&
+            style.zIndex === '2147483647' &&
+            rect.top <= 30 &&
+            rect.right >= window.innerWidth - 5 &&
+            rect.height >= 150 &&
+            rect.width >= 300
+          );
+        }
+
+        function hideFrame(node) {
+          node.style.setProperty('display', 'none', 'important');
+          node.style.setProperty('visibility', 'hidden', 'important');
+          node.style.setProperty('opacity', '0', 'important');
+          node.style.setProperty('pointer-events', 'none', 'important');
+        }
+
+        function hideFrames(root = document) {
+          const scope = root instanceof HTMLElement ? root : document;
+          const nodes =
+            scope === document
+              ? document.querySelectorAll('iframe')
+              : scope.querySelectorAll('iframe');
+
+          for (const node of nodes) {
+            if (!isTargetAdFrame(node)) {
+              continue;
+            }
+            hideFrame(node);
+          }
+
+          if (scope instanceof HTMLIFrameElement && isTargetAdFrame(scope)) {
+            hideFrame(scope);
+          }
+        }
+
+        Utils.onReady(() => {
+          hideFrames();
+
+          Utils.observeAddedNodes((node) => {
+            hideFrames(node);
+          });
+
+          const observer = new MutationObserver(() => {
+            hideFrames();
+          });
+
+          observer.observe(document.documentElement, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style'],
+          });
+        });
+      },
+    },
     // Site module template:
     // 1. Copy this block.
     // 2. Replace name / match / run.
