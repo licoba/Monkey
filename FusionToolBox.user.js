@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         FusionToolBox
-// @namespace    local.fusion.toolbox
-// @version      0.1.4
+// @namespace    https://github.com/licoba/Monkey
+// @version      0.1.5
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @author       Codex
 // @match        https://tempmail.plus/*
@@ -15,7 +15,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.4';
+  const FUSION_TOOLBOX_VERSION = '0.1.5';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -138,17 +138,16 @@
       },
     },
     {
-      name: '2925.com-hide-left-adv',
+      name: '2925.com-hide-ads',
       match() {
-        return (
-          location.hostname === '2925.com' &&
-          location.hash.startsWith('#/mailList')
-        );
+        return location.hostname === '2925.com';
       },
       run() {
-        const styleId = 'fusion-toolbox-2925-hide-left-adv';
+        const styleId = 'fusion-toolbox-2925-hide-ads';
         const removeSelectors = [
+          '.adv-container',
           '.left-adv',
+          '.index-adv',
         ];
 
         Utils.addStyle(

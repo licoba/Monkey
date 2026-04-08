@@ -124,17 +124,16 @@
       },
     },
     {
-      name: '2925.com-hide-left-adv',
+      name: '2925.com-hide-ads',
       match() {
-        return (
-          location.hostname === '2925.com' &&
-          location.hash.startsWith('#/mailList')
-        );
+        return location.hostname === '2925.com';
       },
       run() {
-        const styleId = 'fusion-toolbox-2925-hide-left-adv';
+        const styleId = 'fusion-toolbox-2925-hide-ads';
         const removeSelectors = [
+          '.adv-container',
           '.left-adv',
+          '.index-adv',
         ];
 
         Utils.addStyle(

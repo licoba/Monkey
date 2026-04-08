@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FusionToolBox Loader
-// @namespace    local.fusion.toolbox
+// @namespace    https://github.com/licoba/Monkey
 // @version      0.1.1
 // @description  Dev loader for local userscript development.
 // @author       Codex
@@ -46,11 +46,11 @@
       `,
     },
     {
-      match: () =>
-        location.hostname === '2925.com' &&
-        location.hash.startsWith('#/mailList'),
+      match: () => location.hostname === '2925.com',
       css: `
-        .left-adv {
+        .adv-container,
+        .left-adv,
+        .index-adv {
           display: none !important;
         }
       `,

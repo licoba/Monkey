@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         FusionToolBox
-// @namespace    local.fusion.toolbox
-// @version      0.1.4
+// @namespace    https://github.com/licoba/Monkey
+// @version      0.1.5
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @author       Codex
 // @match        https://tempmail.plus/*
