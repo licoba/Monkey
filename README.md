@@ -46,31 +46,45 @@
 推荐工作流：
 
 1. 开发时运行本地服务，使用 `my-toolbox.loader.user.js`
-2. 调试完成后执行构建命令生成发布版 `my-toolbox.user.js`
+2. 调试完成后执行打包脚本生成发布版 `my-toolbox.user.js`
 3. 把生成后的 `my-toolbox.user.js` 发布到 Greasy Fork
 
 ### 构建发布版
 
-前提：本机已安装 Node.js。
+前提：
+
+- 本机已安装 Python
+- 开发模式仍然需要 Node.js 来跑本地 dev server
 
 在项目根目录执行：
 
 ```powershell
-npm run build
+py .\build.py
 ```
 
-这个命令会：
+这个脚本会：
 
 - 读取 `userscript-header.txt`
 - 读取 `toolbox-runtime.js`
 - 自动生成发布文件 `my-toolbox.user.js`
+- 自动把发布版本号同步到 `TOOLBOX_VERSION`
+- 输出构建结果和下一步发布提示
 
 以后不要手工维护 `my-toolbox.user.js` 的脚本逻辑，逻辑统一写在 `toolbox-runtime.js`。
+
+常用用法：
+
+```powershell
+py .\build.py
+py .\build.py --check
+py .\build.py --version 0.1.2
+py .\build.py --output .\dist\fusion-toolbox.user.js
+```
 
 ### 发布到 Greasy Fork
 
 1. 确认 `userscript-header.txt` 里的 `@version` 已递增
-2. 运行 `npm run build`
+2. 运行 `py .\build.py`
 3. 打开 <https://greasyfork.org/zh-CN/scripts/new>
 4. 粘贴 `my-toolbox.user.js` 内容并提交
 

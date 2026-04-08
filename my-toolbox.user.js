@@ -11,7 +11,7 @@
 // @license      MIT
 // ==/UserScript==
 
-// Built from toolbox-runtime.js via build-release.js.
+// Built from toolbox-runtime.js via build.py.
 (function () {
   'use strict';
 
@@ -207,4 +207,3 @@
     }
   }
 })();
-

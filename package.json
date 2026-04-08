@@ -2,6 +2,6 @@
   "name": "my-toolbox-userscript",
   "private": true,
   "scripts": {
-    "build": "node build-release.js"
+    "build": "python build.py"
   }
 }
