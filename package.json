@@ -2,6 +2,7 @@
   "name": "fusion-toolbox-userscript",
   "private": true,
   "scripts": {
-    "build": "python build.py"
+    "build": "python build.py",
+    "dev": "node start-FusionToolBox-server.js"
   }
 }

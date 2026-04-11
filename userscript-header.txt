@@ -2,13 +2,14 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.17
+// @version      0.1.18
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
 // @match        https://www.meiguodizhi.com/*
+// @match        https://greasyfork.org/*
 // @run-at       document-start
 // @grant        none
 // @license      MIT

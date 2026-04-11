@@ -7,6 +7,7 @@
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
 // @match        https://www.meiguodizhi.com/*
+// @match        https://greasyfork.org/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -53,6 +54,27 @@
         .left-adv,
         .index-adv {
           display: none !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'greasyfork.org',
+      css: `
+        ins.adsbygoogle,
+        iframe[id^="google_ads_iframe"],
+        iframe[src*="googlesyndication"],
+        iframe[src*="doubleclick"],
+        [id^="google_ads_iframe"],
+        [class*="adsbygoogle"],
+        [class*="ad-container"],
+        [class*="ad-slot"],
+        [class*="advert"],
+        [data-ad-client],
+        [data-ad-slot] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
         }
       `,
     },

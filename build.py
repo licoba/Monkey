@@ -2,6 +2,7 @@ import argparse
 import pathlib
 import re
 import sys
+from typing import Optional
 
 
 ROOT = pathlib.Path(__file__).resolve().parent
@@ -17,7 +18,8 @@ def read_text(path: pathlib.Path) -> str:
 
 
 def write_text(path: pathlib.Path, content: str) -> None:
-    path.write_text(content, encoding="utf-8", newline="\n")
+    with path.open("w", encoding="utf-8", newline="\n") as file:
+        file.write(content)
 
 
 def extract_version(header: str) -> str:
@@ -103,7 +105,7 @@ def prompt_choice(prompt: str, valid_choices: set[str]) -> str:
         print(f"请输入以下选项之一：{', '.join(display_choices)}")
 
 
-def prompt_for_version(current_version: str) -> str | None:
+def prompt_for_version(current_version: str) -> Optional[str]:
     print(f"当前版本：{current_version}")
     should_bump = prompt_choice("是否升级版本号？[Y/n]: ", {"", "y", "n"})
 
