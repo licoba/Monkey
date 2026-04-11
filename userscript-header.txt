@@ -8,6 +8,7 @@
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
+// @match        https://www.linshiyouxiang.net/*
 // @match        https://www.meiguodizhi.com/*
 // @match        https://greasyfork.org/*
 // @run-at       document-start

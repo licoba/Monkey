@@ -162,6 +162,103 @@
       },
     },
     {
+      name: 'linshiyouxiang.net-hide-bottom-ads',
+      match() {
+        return location.hostname === 'www.linshiyouxiang.net';
+      },
+      run() {
+        const styleId = 'fusion-toolbox-linshiyouxiang-hide-bottom-ads';
+        const hideSelectors = [
+          'ins.adsbygoogle',
+          'iframe[id^="google_ads_iframe"]',
+          'iframe[src*="googlesyndication"]',
+          'iframe[src*="doubleclick"]',
+          '[id^="google_ads_iframe"]',
+          '[class*="adsbygoogle"]',
+        ];
+        const removeSelectors = [
+          '.site-description',
+          '.px-2.text-center',
+          '.d-none.d-lg-block.col-md-3.no-padding.text-center',
+          '[data-ad-client]',
+          '[data-ad-slot]',
+        ];
+        const floatingPromoSelectors = [
+          '[style*="position:fixed"][style*="bottom"][style*="right"]',
+          '[style*="position: fixed"][style*="bottom"][style*="right"]',
+        ];
+
+        const shouldRemoveFloatingPromo = (node) => {
+          if (!(node instanceof Element)) {
+            return false;
+          }
+
+          const style = (node.getAttribute('style') || '').toLowerCase();
+          if (!style.includes('position:fixed') && !style.includes('position: fixed')) {
+            return false;
+          }
+          if (!style.includes('bottom') || !style.includes('right')) {
+            return false;
+          }
+
+          const text = (node.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+          if (!text) {
+            return false;
+          }
+
+          return (
+            (text.includes('电子邮件') && text.includes('即时消息')) ||
+            (text.includes('email') && text.includes('message'))
+          );
+        };
+
+        Utils.addStyle(
+          styleId,
+          `${hideSelectors.join(',\n')} {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            min-height: 0 !important;
+            max-height: 0 !important;
+          }
+          ${removeSelectors.join(',\n')} {
+            display: none !important;
+          }`
+        );
+
+        const hide = (root = document) => {
+          Utils.hideSelectors(hideSelectors, root);
+          Utils.removeSelectors(removeSelectors, root);
+
+          const candidates = [];
+          if (root instanceof Element) {
+            candidates.push(root);
+          }
+          for (const selector of floatingPromoSelectors) {
+            candidates.push(...root.querySelectorAll(selector));
+          }
+          for (const node of candidates) {
+            if (shouldRemoveFloatingPromo(node)) {
+              node.style.setProperty('display', 'none', 'important');
+            }
+          }
+        };
+
+        Utils.onReady(() => {
+          hide();
+
+          Utils.observeAddedNodes((node) => {
+            if (node.matches?.([...hideSelectors, ...removeSelectors].join(','))) {
+              hide(node.parentElement || document);
+              return;
+            }
+
+            hide(node);
+          });
+        });
+      },
+    },
+    {
       name: 'meiguodizhi.com-hide-right-ad-iframe',
       match() {
         return location.hostname === 'www.meiguodizhi.com';

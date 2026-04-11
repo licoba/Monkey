@@ -6,6 +6,7 @@
 // @author       Codex
 // @match        https://tempmail.plus/*
 // @match        https://2925.com/*
+// @match        https://www.linshiyouxiang.net/*
 // @match        https://www.meiguodizhi.com/*
 // @match        https://greasyfork.org/*
 // @run-at       document-start
@@ -54,6 +55,28 @@
         .left-adv,
         .index-adv {
           display: none !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'www.linshiyouxiang.net',
+      css: `
+        ins.adsbygoogle,
+        iframe[id^="google_ads_iframe"],
+        iframe[src*="googlesyndication"],
+        iframe[src*="doubleclick"],
+        [id^="google_ads_iframe"],
+        [class*="adsbygoogle"],
+        .px-2.text-center,
+        .d-none.d-lg-block.col-md-3.no-padding.text-center,
+        [data-ad-client],
+        [data-ad-slot] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
         }
       `,
     },
