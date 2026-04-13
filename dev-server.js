@@ -6,11 +6,12 @@ const host = '127.0.0.1';
 const port = 8123;
 const root = __dirname;
 const watchedFiles = [
-  'FusionToolBox.runtime.js',
   'FusionToolBox.user.js',
   'FusionToolBox.loader.user.js',
+  'userscript-header.txt',
   'README.md',
 ];
+const watchedDirs = ['src', 'sites'];
 
 const clients = new Set();
 
@@ -37,7 +38,57 @@ function contentType(filePath) {
   return 'text/plain; charset=utf-8';
 }
 
+function readText(filePath) {
+  return fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n');
+}
+
+function listSiteFiles() {
+  const sitesDir = path.join(root, 'sites');
+  return fs.readdirSync(sitesDir)
+    .filter((name) => name.endsWith('.js') && !name.startsWith('_'))
+    .sort()
+    .map((name) => path.join(sitesDir, name));
+}
+
+function buildRuntime() {
+  const headerPath = path.join(root, 'userscript-header.txt');
+  const prefixPath = path.join(root, 'src', 'runtime-prefix.js');
+  const suffixPath = path.join(root, 'src', 'runtime-suffix.js');
+
+  const header = readText(headerPath);
+  const versionMatch = header.match(/^\/\/ @version\s+(.+)$/m);
+  if (!versionMatch) {
+    throw new Error('userscript-header.txt 缺少 @version');
+  }
+
+  const version = versionMatch[1].trim();
+  const prefix = readText(prefixPath).replace('__FUSION_TOOLBOX_VERSION__', version).trimEnd();
+  const modules = listSiteFiles().map((filePath) => readText(filePath).trim());
+  const suffix = readText(suffixPath).trim();
+
+  return `${prefix}\n${modules.join(',\n')}\n${suffix}\n`;
+}
+
 function serveFile(req, res, fileName) {
+  if (fileName === 'FusionToolBox.runtime.js') {
+    try {
+      const data = buildRuntime();
+      res.writeHead(200, {
+        'Content-Type': 'application/javascript; charset=utf-8',
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        Pragma: 'no-cache',
+        Expires: '0',
+        'Access-Control-Allow-Origin': '*',
+      });
+      res.end(data);
+      return;
+    } catch (error) {
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end(`Failed to build FusionToolBox.runtime.js: ${error.message}`);
+      return;
+    }
+  }
+
   const filePath = path.join(root, fileName);
   fs.readFile(filePath, (error, data) => {
     if (error) {
@@ -107,6 +158,12 @@ const server = http.createServer((req, res) => {
 for (const file of watchedFiles) {
   fs.watch(path.join(root, file), { persistent: true }, () => {
     sendReload(file);
+  });
+}
+
+for (const dir of watchedDirs) {
+  fs.watch(path.join(root, dir), { persistent: true }, (_eventType, fileName) => {
+    sendReload(`${dir}/${fileName || ''}`);
   });
 }
 

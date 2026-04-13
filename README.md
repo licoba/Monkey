@@ -4,6 +4,7 @@
 
 - 一个总脚本 `FusionToolBox.user.js`
 - 每个网站一个模块
+- 每个站点模块单独放在 `sites/*.js`
 - 每个模块都实现 `match()` 和 `run()`
 - 默认使用白名单模式，只对 `@match` 里列出的网站注入
 
@@ -28,14 +29,18 @@
    或 macOS / Linux / 跨平台环境运行 `python3 ./start-FusionToolBox-server.py`
 2. 浏览器打开 `http://127.0.0.1:8123/FusionToolBox.loader.user.js`
 3. 用 Tampermonkey 安装这个加载器
-4. 以后只改本地的 `FusionToolBox.runtime.js`
+4. 以后只改本地的 `sites/*.js` 或 `src/*.js`
 5. 保存文件后，已打开的页面会自动刷新并加载最新代码
 
 开发模式文件：
 
 - `FusionToolBox.loader.user.js`
-- `FusionToolBox.runtime.js`
+- `src/runtime-prefix.js`
+- `src/runtime-suffix.js`
+- `sites/*.js`
 - `dev-server.js`
+
+开发服务器会在请求 `FusionToolBox.runtime.js` 时，实时把 `src/` 和 `sites/` 里的源文件拼成一个运行时脚本，所以开发时不需要手工先构建。
 
 当前开发加载器只对白名单网站生效：
 
@@ -68,13 +73,16 @@ py .\build.py
 这个脚本会：
 
 - 读取 `userscript-header.txt`
-- 读取 `FusionToolBox.runtime.js`
+- 读取 `src/runtime-prefix.js`
+- 读取 `src/runtime-suffix.js`
+- 读取 `sites/*.js`
+- 生成 `FusionToolBox.runtime.js`
 - 交互式显示当前版本，并询问是否要自动把补丁版本加 `1`
 - 自动生成发布文件 `FusionToolBox.user.js`
 - 自动把发布版本号同步到 `FUSION_TOOLBOX_VERSION`
 - 输出构建结果和下一步发布提示
 
-以后不要手工维护 `FusionToolBox.user.js` 的脚本逻辑，逻辑统一写在 `FusionToolBox.runtime.js`。
+以后不要手工维护 `FusionToolBox.runtime.js` 和 `FusionToolBox.user.js` 的脚本逻辑，逻辑统一写在 `sites/*.js` 和 `src/*.js`。
 
 常用用法：
 
@@ -130,7 +138,7 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 
 如果要让脚本对新网站注入，除了新增模块，还要在脚本头部新增对应的 `@match`。
 
-你现在可以直接复制 `FusionToolBox.runtime.js` 里的 `github.com-template` 或 `example.com-template` 模块。
+你现在可以直接复制 `sites/_template.github.js` 或 `sites/_template.example.js`，另存为新的站点文件。
 
 示例：
 

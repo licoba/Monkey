@@ -8,6 +8,9 @@ from typing import Optional
 ROOT = pathlib.Path(__file__).resolve().parent
 HEADER_PATH = ROOT / "userscript-header.txt"
 RUNTIME_PATH = ROOT / "FusionToolBox.runtime.js"
+RUNTIME_PREFIX_PATH = ROOT / "src" / "runtime-prefix.js"
+RUNTIME_SUFFIX_PATH = ROOT / "src" / "runtime-suffix.js"
+SITES_DIR = ROOT / "sites"
 DEFAULT_OUTPUT_PATH = ROOT / "FusionToolBox.user.js"
 REQUIRED_META_KEYS = ("@name", "@namespace", "@version", "@description")
 SEMVER_PATTERN = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
@@ -20,6 +23,17 @@ def read_text(path: pathlib.Path) -> str:
 def write_text(path: pathlib.Path, content: str) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as file:
         file.write(content)
+
+
+def list_site_paths() -> list[pathlib.Path]:
+    if not SITES_DIR.exists():
+        raise ValueError(f"站点目录不存在：{SITES_DIR}")
+
+    return sorted(
+        path
+        for path in SITES_DIR.glob("*.js")
+        if path.is_file() and not path.name.startswith("_")
+    )
 
 
 def extract_version(header: str) -> str:
@@ -55,17 +69,22 @@ def replace_header_version(header: str, version: str) -> str:
     )
 
 
-def sync_runtime_version(runtime: str, version: str) -> str:
-    lines = runtime.splitlines()
+def build_runtime(version: str) -> str:
+    prefix = read_text(RUNTIME_PREFIX_PATH)
+    suffix = read_text(RUNTIME_SUFFIX_PATH)
+    site_modules = [read_text(path).strip() for path in list_site_paths()]
 
-    for index, line in enumerate(lines):
-        if "const FUSION_TOOLBOX_VERSION =" not in line:
-            continue
-        indent = line[: len(line) - len(line.lstrip())]
-        lines[index] = f"{indent}const FUSION_TOOLBOX_VERSION = '{version}';"
-        return "\n".join(lines)
+    if "__FUSION_TOOLBOX_VERSION__" not in prefix:
+        raise ValueError("runtime-prefix.js 缺少 __FUSION_TOOLBOX_VERSION__ 占位符")
 
-    raise ValueError("FusionToolBox.runtime.js 中未找到 FUSION_TOOLBOX_VERSION")
+    prefix = prefix.replace("__FUSION_TOOLBOX_VERSION__", version)
+    modules_text = ",\n".join(site_modules)
+
+    return (
+        f"{prefix.rstrip()}\n"
+        f"{modules_text}\n"
+        f"{suffix.lstrip().rstrip()}\n"
+    )
 
 
 def build_output(header: str, runtime: str) -> str:
@@ -148,8 +167,6 @@ def main() -> int:
     args = parse_args()
 
     header = read_text(HEADER_PATH)
-    runtime = read_text(RUNTIME_PATH)
-
     validate_header(header)
 
     current_version = extract_version(header)
@@ -164,7 +181,7 @@ def main() -> int:
         write_text(HEADER_PATH, header)
 
     version = extract_version(header)
-    runtime = sync_runtime_version(runtime, version)
+    runtime = build_runtime(version)
     output = build_output(header, runtime)
     output_path = pathlib.Path(args.output).resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -176,6 +193,7 @@ def main() -> int:
         print(f"Output: {output_path}")
         return 0
 
+    write_text(RUNTIME_PATH, runtime)
     write_text(output_path, output)
 
     print("Build completed.")
