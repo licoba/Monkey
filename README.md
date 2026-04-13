@@ -25,8 +25,7 @@
 
 开发模式下，安装一次加载器脚本，真正逻辑从本地服务动态加载。
 
-1. 运行 `.\start-FusionToolBox-server.ps1`
-   或 macOS / Linux / 跨平台环境运行 `python3 ./start-FusionToolBox-server.py`
+1. Windows / macOS / Linux 都直接运行 `python ./start-FusionToolBox-server.py`
 2. 浏览器打开 `http://127.0.0.1:8123/FusionToolBox.loader.user.js`
 3. 用 Tampermonkey 安装这个加载器
 4. 以后只改本地的 `sites/*.js` 或 `src/*.js`

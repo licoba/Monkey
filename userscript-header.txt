@@ -11,6 +11,8 @@
 // @match        https://www.linshiyouxiang.net/*
 // @match        https://www.meiguodizhi.com/*
 // @match        https://greasyfork.org/*
+// @match        https://www.toolhelper.cn/*
+// @match        https://www.json.cn/*
 // @run-at       document-start
 // @grant        none
 // @license      MIT

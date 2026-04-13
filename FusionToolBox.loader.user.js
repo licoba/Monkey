@@ -9,6 +9,8 @@
 // @match        https://www.linshiyouxiang.net/*
 // @match        https://www.meiguodizhi.com/*
 // @match        https://greasyfork.org/*
+// @match        https://www.toolhelper.cn/*
+// @match        https://www.json.cn/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -98,6 +100,51 @@
           visibility: hidden !important;
           opacity: 0 !important;
           pointer-events: none !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'www.toolhelper.cn' && location.pathname === '/JSON/JSONFormat',
+      css: `
+        #divAd,
+        #divAd *,
+        ins.adsbygoogle,
+        script[src*="pagead2.googlesyndication.com"],
+        [data-ad-client],
+        [data-ad-slot] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'www.json.cn',
+      css: `
+        .show-hide-adv,
+        .show-hide-adv *,
+        .wwads-cn,
+        .wwads-sticky,
+        .wwads-sticky *,
+        .wwads-horizontal,
+        .wwads-vertical,
+        [class*="wwads"],
+        [class*="wwads"][class*="sticky"],
+        script[src*="cdn.wwads.cn/js/makemoney.js"],
+        script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"],
+        script[src*="/d/dt/"],
+        iframe[src*="wwads"],
+        iframe[src*="googlesyndication"],
+        iframe[src*="doubleclick"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
         }
       `,
     },
