@@ -11,6 +11,8 @@
 // @match        https://greasyfork.org/*
 // @match        https://www.toolhelper.cn/*
 // @match        https://www.json.cn/*
+// @match        https://ip.sb/*
+// @match        https://www.ip.sb/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -145,6 +147,28 @@
           pointer-events: none !important;
           min-height: 0 !important;
           max-height: 0 !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'ip.sb' || location.hostname === 'www.ip.sb',
+      css: `
+        ins.adsbygoogle,
+        iframe[id^="google_ads_iframe"],
+        iframe[src*="googlesyndication"],
+        iframe[src*="doubleclick"],
+        [id^="google_ads_iframe"],
+        [class*="adsbygoogle"],
+        [data-ad-client],
+        [data-ad-slot],
+        a[href*="sa.net"],
+        a[href*="riven.cloud"],
+        a[href*="crmeb"],
+        a[href*="duomall"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
         }
       `,
     },

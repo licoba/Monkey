@@ -12,6 +12,7 @@
 
 - `tempmail.plus`：隐藏左右广告位
 - `2925.com`：隐藏站内广告容器，包括阅读页浮层广告和首页广告卡片
+- `ip.sb`：隐藏 Riven Cloud 推广块和常见广告节点
 - `example.com`：空白模板模块
 
 ## 使用方法
@@ -47,6 +48,8 @@
 - `https://2925.com/*`
 - `https://www.meiguodizhi.com/*`
 - `https://greasyfork.org/*`
+- `https://ip.sb/*`
+- `https://www.ip.sb/*`
 
 ## 发布工作流
 
@@ -126,6 +129,8 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 - `https://2925.com/*`
 - `https://www.meiguodizhi.com/*`
 - `https://greasyfork.org/*`
+- `https://ip.sb/*`
+- `https://www.ip.sb/*`
 
 ## 后续新增网站
 
