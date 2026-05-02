@@ -13,6 +13,7 @@
 // @match        https://www.json.cn/*
 // @match        https://ip.sb/*
 // @match        https://www.ip.sb/*
+// @match        https://linux.do/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
