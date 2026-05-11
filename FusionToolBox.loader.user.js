@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         FusionToolBox Loader
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.1
+// @version      0.1.2
 // @description  Dev loader for local userscript development.
 // @author       Codex
 // @match        https://tempmail.plus/*
@@ -14,6 +14,7 @@
 // @match        https://ip.sb/*
 // @match        https://www.ip.sb/*
 // @match        https://linux.do/*
+// @match        https://finance.sina.com.cn/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -170,6 +171,75 @@
           visibility: hidden !important;
           opacity: 0 !important;
           pointer-events: none !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'finance.sina.com.cn',
+      css: `
+        ins.sinaads,
+        [data-ad-pdps],
+        [data-ad-client],
+        [data-ad-slot],
+        #sinaads-script,
+        #left_hzh_ad,
+        #last_ad_wrap,
+        #last_side_ad,
+        #PublicRelation2,
+        #PublicRelation3,
+        #PublicRelation6,
+        #PublicRelation8,
+        #left_focus_ad,
+        #pl_sideAd,
+        #pradc1,
+        #pradc2,
+        #pradc3,
+        #pradc4,
+        #pradc5,
+        #pradc6,
+        #pradc7,
+        #pradc8,
+        #pradc9,
+        #pradc10,
+        #pradc11,
+        .tb-left.auto_switch,
+        .cj-r-qr,
+        .blk-zcapp,
+        .blk-wxfollow,
+        .tab_related_app_imglink,
+        .tab_related_app_imglink1,
+        .page-right-bar .zc-app-btn,
+        .tool-icon .fapp,
+        .side-btns-answer2022,
+        #heimaogif,
+        #tab_related,
+        .blk-related,
+        .page-right-bar .btn-home,
+        .page-right-bar .btn-audio,
+        .page-right-bar .btn-related,
+        [data-sudaclick="right_discovery_p"],
+        [data-sudaclick="right_scientist_p"],
+        [data-sudaclick="right_apple_p"],
+        [data-sudaclick="right_zhongce_p"],
+        [data-sudaclick="right_zt_p"],
+        [data-sudaclick="right_weibo_p"],
+        .top-ad,
+        .right-side-ad,
+        .ad.high-ad,
+        div.ad[id^="pradc"],
+        script[src*="/sinaads/"],
+        script[src*="/litong/zhitou/"],
+        script[src*="/d1images/button/rotator.js"],
+        script[src*="/finance/blackcat/pc/bcat.js"],
+        script[src*="pluto.sina.cn/gk/match"],
+        script[id="ttzz"],
+        script[src*="bytegoofy.com/goofy/ttzz/push.js"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
         }
       `,
     },

@@ -14,6 +14,7 @@
 - `2925.com`：隐藏站内广告容器，包括阅读页浮层广告和首页广告卡片
 - `ip.sb`：隐藏 Riven Cloud 推广块和常见广告节点
 - `linux.do`：隐藏顶部社区标语横幅
+- `finance.sina.com.cn`：隐藏新浪财经文章页广告、浮层和广告脚本节点
 - `example.com`：空白模板模块
 
 ## 使用方法
@@ -52,6 +53,7 @@
 - `https://ip.sb/*`
 - `https://www.ip.sb/*`
 - `https://linux.do/*`
+- `https://finance.sina.com.cn/*`
 
 ## 发布工作流
 
@@ -134,6 +136,7 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 - `https://ip.sb/*`
 - `https://www.ip.sb/*`
 - `https://linux.do/*`
+- `https://finance.sina.com.cn/*`
 
 ## 后续新增网站
 

@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.23
+// @version      0.1.25
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -16,6 +16,7 @@
 // @match        https://ip.sb/*
 // @match        https://www.ip.sb/*
 // @match        https://linux.do/*
+// @match        https://finance.sina.com.cn/*
 // @run-at       document-start
 // @grant        none
 // @license      MIT
