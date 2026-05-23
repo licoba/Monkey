@@ -15,6 +15,7 @@
 // @match        https://www.ip.sb/*
 // @match        https://linux.do/*
 // @match        https://finance.sina.com.cn/*
+// @match        https://v2ex.com/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -234,6 +235,24 @@
         script[src*="pluto.sina.cn/gk/match"],
         script[id="ttzz"],
         script[src*="bytegoofy.com/goofy/ttzz/push.js"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'v2ex.com' || location.hostname === 'www.v2ex.com',
+      css: `
+        #Rightbar .box:has(a[href*="statistics.wlai.vip"]),
+        #Rightbar .box:has(a[href*="wlai.vip"]),
+        #Rightbar .box:has(a[href*="/ads/"]),
+        #Rightbar .box:has(a[href*="utm_source=v2ex"]),
+        #Rightbar .box:has(img[src*="ads"]),
+        #Rightbar .box:has(img[src*="ad"]) {
           display: none !important;
           visibility: hidden !important;
           opacity: 0 !important;

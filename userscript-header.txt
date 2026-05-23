@@ -17,6 +17,7 @@
 // @match        https://www.ip.sb/*
 // @match        https://linux.do/*
 // @match        https://finance.sina.com.cn/*
+// @match        https://v2ex.com/*
 // @run-at       document-start
 // @grant        none
 // @license      MIT
