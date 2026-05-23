@@ -16,6 +16,7 @@
 // @match        https://linux.do/*
 // @match        https://finance.sina.com.cn/*
 // @match        https://v2ex.com/*
+// @match        https://mail.chatgpt.org.uk/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -253,6 +254,30 @@
         #Rightbar .box:has(a[href*="utm_source=v2ex"]),
         #Rightbar .box:has(img[src*="ads"]),
         #Rightbar .box:has(img[src*="ad"]) {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
+        }
+      `,
+    },
+    {
+      match: () => location.hostname === 'mail.chatgpt.org.uk',
+      css: `
+        ins.adsbygoogle,
+        iframe[id^="google_ads_iframe"],
+        iframe[src*="googlesyndication"],
+        iframe[src*="doubleclick"],
+        [id^="google_ads_iframe"],
+        [class*="adsbygoogle"],
+        [data-ad-client],
+        [data-ad-slot],
+        .affiliate-banner,
+        script[src*="pagead2.googlesyndication.com"],
+        script[src*="googlesyndication.com"],
+        script[src*="doubleclick.net"] {
           display: none !important;
           visibility: hidden !important;
           opacity: 0 !important;

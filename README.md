@@ -16,6 +16,7 @@
 - `linux.do`：隐藏顶部社区标语横幅
 - `finance.sina.com.cn`：隐藏新浪财经文章页广告、浮层和广告脚本节点
 - `v2ex.com`：隐藏右侧栏推广广告
+- `mail.chatgpt.org.uk`：隐藏 GPTMail 页面广告和推广位
 - `example.com`：空白模板模块
 
 ## 使用方法
@@ -56,6 +57,7 @@
 - `https://linux.do/*`
 - `https://finance.sina.com.cn/*`
 - `https://v2ex.com/*`
+- `https://mail.chatgpt.org.uk/*`
 
 ## 发布工作流
 
@@ -140,6 +142,7 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 - `https://linux.do/*`
 - `https://finance.sina.com.cn/*`
 - `https://v2ex.com/*`
+- `https://mail.chatgpt.org.uk/*`
 
 ## 后续新增网站
 

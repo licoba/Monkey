@@ -5,6 +5,7 @@
   },
   run() {
     const bannerTextPattern = /真诚[、,，]\s*友善[、,，]\s*团结[、,，]\s*专业[，,]\s*共建你我引以为荣之社区[。!！]?|Where possible begins/i;
+    const externalLinkDialogPattern = /打开外部链接|external link/i;
     const candidateSelectors = [
       '#banner',
       '.banner-box',
@@ -52,6 +53,70 @@
       return fallback;
     };
 
+    const isExternalHttpUrl = (url) => {
+      return /^https?:$/.test(url.protocol) && url.hostname !== location.hostname;
+    };
+
+    const openExternalLinkDirectly = (event) => {
+      const link = event.target.closest?.('a[href]');
+
+      if (!link || event.defaultPrevented || event.button !== 0 || link.hasAttribute('download')) {
+        return;
+      }
+
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#')) {
+        return;
+      }
+
+      let url;
+      try {
+        url = new URL(href, location.href);
+      } catch (error) {
+        return;
+      }
+
+      if (!isExternalHttpUrl(url)) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if (event.metaKey || event.ctrlKey || event.shiftKey || link.target === '_blank') {
+        window.open(url.href, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
+      window.location.href = url.href;
+    };
+
+    const autoContinueExternalLinkDialog = (root = document) => {
+      const scope = root instanceof Document ? root : root.ownerDocument || document;
+      const dialogs = scope.querySelectorAll(
+        '.d-modal, .modal, .modal-container, .dialog, [role="dialog"]'
+      );
+
+      for (const dialog of dialogs) {
+        const text = normalizeText(dialog.textContent || '');
+
+        if (!externalLinkDialogPattern.test(text)) {
+          continue;
+        }
+
+        const controls = dialog.querySelectorAll('button, a, .btn');
+
+        for (const control of controls) {
+          const controlText = normalizeText(control.textContent || '');
+
+          if (/继续|continue/i.test(controlText)) {
+            control.click();
+            return;
+          }
+        }
+      }
+    };
+
     const hideSloganBanner = (root = document) => {
       const scope = root instanceof Document ? root : root.ownerDocument || document;
 
@@ -81,10 +146,13 @@
     };
 
     Utils.onReady(() => {
+      document.addEventListener('click', openExternalLinkDirectly, true);
       hideSloganBanner();
+      autoContinueExternalLinkDialog();
 
       Utils.observeAddedNodes((node) => {
         hideSloganBanner(node);
+        autoContinueExternalLinkDialog(node);
       });
     });
   },
