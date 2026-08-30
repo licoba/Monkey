@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "python build.py",
-    "dev": "python start-FusionToolBox-server.py"
+    "dev": "python start-FusionToolBox-server.py",
+    "test": "node --test tests/*.test.js"
   }
 }

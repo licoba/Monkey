@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         FusionToolBox Loader
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.2
+// @version      0.1.5
 // @description  Dev loader for local userscript development.
 // @author       Codex
 // @match        https://tempmail.plus/*
@@ -17,8 +17,10 @@
 // @match        https://finance.sina.com.cn/*
 // @match        https://v2ex.com/*
 // @match        https://mail.chatgpt.org.uk/*
+// @match        https://chatgpt.com/*
 // @run-at       document-start
-// @grant        none
+// @grant        GM_xmlhttpRequest
+// @connect      127.0.0.1
 // ==/UserScript==
 
 (function () {
@@ -301,14 +303,95 @@
     }
   }
 
-  function injectScript(src) {
-    const script = document.createElement('script');
-    script.src = `${src}?t=${Date.now()}`;
-    script.async = false;
-    headTarget.appendChild(script);
+  function requestLocalText(path, onLoad) {
+    GM_xmlhttpRequest({
+      method: 'GET',
+      url: `${baseUrl}/${path}?t=${Date.now()}`,
+      timeout: 5000,
+      onload(response) {
+        if (response.status < 200 || response.status >= 300) {
+          console.error(`[FusionToolBox] Failed to load ${path}: HTTP ${response.status}`);
+          return;
+        }
+
+        onLoad(response.responseText);
+      },
+      onerror() {
+        console.error(`[FusionToolBox] Failed to load ${path}: request error`);
+      },
+      ontimeout() {
+        console.error(`[FusionToolBox] Failed to load ${path}: request timeout`);
+      },
+    });
+  }
+
+  function loadRuntime() {
+    requestLocalText('FusionToolBox.runtime.js', (source) => {
+      const blob = new Blob([source], { type: 'text/javascript' });
+      const runtimeUrl = URL.createObjectURL(blob);
+      const script = document.createElement('script');
+
+      script.src = runtimeUrl;
+      script.async = false;
+      script.onload = () => {
+        URL.revokeObjectURL(runtimeUrl);
+        script.remove();
+      };
+      script.onerror = () => {
+        URL.revokeObjectURL(runtimeUrl);
+        script.remove();
+        console.error('[FusionToolBox] Failed to execute Blob runtime');
+      };
+      headTarget.appendChild(script);
+    });
+  }
+
+  function watchRevision() {
+    let currentRevision = null;
+    let requestInFlight = false;
+
+    const checkRevision = () => {
+      if (requestInFlight) {
+        return;
+      }
+
+      requestInFlight = true;
+      GM_xmlhttpRequest({
+        method: 'GET',
+        url: `${baseUrl}/revision?t=${Date.now()}`,
+        timeout: 5000,
+        onload(response) {
+          requestInFlight = false;
+
+          if (response.status < 200 || response.status >= 300) {
+            return;
+          }
+
+          const nextRevision = response.responseText.trim();
+
+          if (currentRevision === null) {
+            currentRevision = nextRevision;
+            return;
+          }
+
+          if (nextRevision && nextRevision !== currentRevision) {
+            location.reload();
+          }
+        },
+        onerror() {
+          requestInFlight = false;
+        },
+        ontimeout() {
+          requestInFlight = false;
+        },
+      });
+    };
+
+    checkRevision();
+    setInterval(checkRevision, 1000);
   }
 
   injectCriticalStyles();
-  injectScript(`${baseUrl}/FusionToolBox.runtime.js`);
-  injectScript(`${baseUrl}/dev-client.js`);
+  loadRuntime();
+  watchRevision();
 })();

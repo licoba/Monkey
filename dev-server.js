@@ -14,8 +14,12 @@ const watchedFiles = [
 const watchedDirs = ['src', 'sites'];
 
 const clients = new Set();
+let revisionCounter = 0;
+let revision = `${Date.now()}-${revisionCounter}`;
 
 function sendReload(reason) {
+  revisionCounter += 1;
+  revision = `${Date.now()}-${revisionCounter}`;
   const payload = `event: reload\ndata: ${JSON.stringify({ reason, at: Date.now() })}\n\n`;
   for (const client of clients) {
     client.write(payload);
@@ -148,6 +152,18 @@ const server = http.createServer((req, res) => {
       'Access-Control-Allow-Origin': '*',
     });
     res.end(devClientScript);
+    return;
+  }
+
+  if (requestPath === '/revision') {
+    res.writeHead(200, {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+      'Access-Control-Allow-Origin': '*',
+    });
+    res.end(revision);
     return;
   }
 
