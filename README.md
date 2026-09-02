@@ -16,7 +16,8 @@
 - `linux.do`：隐藏顶部社区标语横幅
 - `finance.sina.com.cn`：隐藏新浪财经文章页广告、浮层和广告脚本节点
 - `v2ex.com`：隐藏右侧栏推广广告
-- `www.nodeseek.com`：隐藏首页帖子列表中的用户头像
+- `www.nodeseek.com`：隐藏首页帖子及个人头像，并移除“欢迎新用户”模块
+- `www.tampermonkey.net/scripts.php`：隐藏用户脚本页面的左右栏、内容区和自动广告
 - `mail.chatgpt.org.uk`：隐藏 GPTMail 页面广告和推广位
 - `chatgpt.com`：隐藏工作区成员达到使用上限的顶部横幅
 - `example.com`：空白模板模块
@@ -60,6 +61,7 @@
 - `https://finance.sina.com.cn/*`
 - `https://v2ex.com/*`
 - `https://www.nodeseek.com/*`
+- `https://www.tampermonkey.net/scripts.php*`
 - `https://mail.chatgpt.org.uk/*`
 - `https://chatgpt.com/*`
 
@@ -147,6 +149,7 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 - `https://finance.sina.com.cn/*`
 - `https://v2ex.com/*`
 - `https://www.nodeseek.com/*`
+- `https://www.tampermonkey.net/scripts.php*`
 - `https://mail.chatgpt.org.uk/*`
 - `https://chatgpt.com/*`
 

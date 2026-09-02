@@ -17,6 +17,7 @@
 // @match        https://finance.sina.com.cn/*
 // @match        https://v2ex.com/*
 // @match        https://www.nodeseek.com/*
+// @match        https://www.tampermonkey.net/scripts.php*
 // @match        https://mail.chatgpt.org.uk/*
 // @match        https://chatgpt.com/*
 // @run-at       document-start
@@ -31,6 +32,32 @@
   const headTarget = document.head || document.documentElement;
   const criticalStyles = [
     {
+      match: () =>
+        location.hostname === 'www.tampermonkey.net' &&
+        location.pathname === '/scripts.php',
+      css: `
+        .searcad,
+        ins.adsbygoogle,
+        iframe[id^="aswift_"],
+        iframe[id^="google_ads_iframe_"],
+        iframe[src*="googleads.g.doubleclick.net"],
+        [id^="aswift_"][id$="_host"] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
+        }
+
+        body.scripts {
+          padding-bottom: 0 !important;
+        }
+      `,
+    },
+    {
       match: () => location.hostname === 'www.nodeseek.com',
       css: `
         .post-list-item > a:has(> img.avatar-normal) {
@@ -39,6 +66,15 @@
 
         .post-list-item > .post-list-content {
           margin-left: 0 !important;
+        }
+
+        .user-head > a:has(> img.avatar-normal) {
+          display: none !important;
+        }
+
+        .nsk-panel > h4:has(+ .nsk-new-member-board),
+        .nsk-new-member-board {
+          display: none !important;
         }
       `,
     },
