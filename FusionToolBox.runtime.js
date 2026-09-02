@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.27';
+  const FUSION_TOOLBOX_VERSION = '0.1.28';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1608,6 +1608,24 @@
         '.container-fluid > .row:last-of-type + .row',
       ]);
     });
+  },
+},
+{
+  name: 'nodeseek.com-hide-homepage-post-avatars',
+  match() {
+    return location.hostname === 'www.nodeseek.com';
+  },
+  run() {
+    Utils.addStyle(
+      'fusion-toolbox-nodeseek-hide-homepage-post-avatars',
+      `.post-list-item > a:has(> img.avatar-normal) {
+        display: none !important;
+      }
+
+      .post-list-item > .post-list-content {
+        margin-left: 0 !important;
+      }`
+    );
   },
 },
 {

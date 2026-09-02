@@ -16,6 +16,7 @@
 // @match        https://linux.do/*
 // @match        https://finance.sina.com.cn/*
 // @match        https://v2ex.com/*
+// @match        https://www.nodeseek.com/*
 // @match        https://mail.chatgpt.org.uk/*
 // @match        https://chatgpt.com/*
 // @run-at       document-start
@@ -29,6 +30,18 @@
   const baseUrl = 'http://127.0.0.1:8123';
   const headTarget = document.head || document.documentElement;
   const criticalStyles = [
+    {
+      match: () => location.hostname === 'www.nodeseek.com',
+      css: `
+        .post-list-item > a:has(> img.avatar-normal) {
+          display: none !important;
+        }
+
+        .post-list-item > .post-list-content {
+          margin-left: 0 !important;
+        }
+      `,
+    },
     {
       match: () => location.hostname === 'tempmail.plus',
       css: `
