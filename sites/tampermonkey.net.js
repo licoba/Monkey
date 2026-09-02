@@ -8,6 +8,7 @@
   },
   run() {
     const adSelectors = [
+      '.row:has(> .col-12 > .searcad.incontent)',
       '.searcad',
       'ins.adsbygoogle',
       'iframe[id^="aswift_"]',
@@ -19,7 +20,8 @@
 
     Utils.addStyle(
       'fusion-toolbox-tampermonkey-hide-scripts-page-ads',
-      `.searcad,
+      `.row:has(> .col-12 > .searcad.incontent),
+      .searcad,
       ins.adsbygoogle,
       iframe[id^="aswift_"],
       iframe[id^="google_ads_iframe_"],

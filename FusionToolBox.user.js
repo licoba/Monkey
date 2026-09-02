@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.29
+// @version      0.1.30
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -31,7 +31,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.29';
+  const FUSION_TOOLBOX_VERSION = '0.1.30';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1677,6 +1677,7 @@
   },
   run() {
     const adSelectors = [
+      '.row:has(> .col-12 > .searcad.incontent)',
       '.searcad',
       'ins.adsbygoogle',
       'iframe[id^="aswift_"]',
@@ -1688,7 +1689,8 @@
 
     Utils.addStyle(
       'fusion-toolbox-tampermonkey-hide-scripts-page-ads',
-      `.searcad,
+      `.row:has(> .col-12 > .searcad.incontent),
+      .searcad,
       ins.adsbygoogle,
       iframe[id^="aswift_"],
       iframe[id^="google_ads_iframe_"],

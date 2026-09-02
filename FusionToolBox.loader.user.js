@@ -36,6 +36,7 @@
         location.hostname === 'www.tampermonkey.net' &&
         location.pathname === '/scripts.php',
       css: `
+        .row:has(> .col-12 > .searcad.incontent),
         .searcad,
         ins.adsbygoogle,
         iframe[id^="aswift_"],
