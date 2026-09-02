@@ -60,6 +60,7 @@
 - `https://linux.do/*`
 - `https://finance.sina.com.cn/*`
 - `https://v2ex.com/*`
+- `https://www.v2ex.com/*`
 - `https://www.nodeseek.com/*`
 - `https://www.tampermonkey.net/scripts.php*`
 - `https://mail.chatgpt.org.uk/*`
@@ -148,6 +149,7 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 - `https://linux.do/*`
 - `https://finance.sina.com.cn/*`
 - `https://v2ex.com/*`
+- `https://www.v2ex.com/*`
 - `https://www.nodeseek.com/*`
 - `https://www.tampermonkey.net/scripts.php*`
 - `https://mail.chatgpt.org.uk/*`

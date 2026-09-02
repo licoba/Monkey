@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.34
+// @version      0.1.35
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -18,6 +18,7 @@
 // @match        https://linux.do/*
 // @match        https://finance.sina.com.cn/*
 // @match        https://v2ex.com/*
+// @match        https://www.v2ex.com/*
 // @match        https://www.nodeseek.com/*
 // @match        https://www.tampermonkey.net/scripts.php*
 // @match        https://mail.chatgpt.org.uk/*
@@ -31,7 +32,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.34';
+  const FUSION_TOOLBOX_VERSION = '0.1.35';
 
   const Utils = {
     addStyle(id, cssText) {

@@ -16,6 +16,7 @@
 // @match        https://linux.do/*
 // @match        https://finance.sina.com.cn/*
 // @match        https://v2ex.com/*
+// @match        https://www.v2ex.com/*
 // @match        https://www.nodeseek.com/*
 // @match        https://www.tampermonkey.net/scripts.php*
 // @match        https://mail.chatgpt.org.uk/*
