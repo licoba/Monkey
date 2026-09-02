@@ -7,6 +7,7 @@
     Utils.addStyle(
       'fusion-toolbox-nodeseek-hide-homepage-post-avatars',
       `body {
+        background-color: var(--bg-main-color) !important;
         background-image: none !important;
       }
 

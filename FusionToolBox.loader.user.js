@@ -62,6 +62,7 @@
       match: () => location.hostname === 'www.nodeseek.com',
       css: `
         body {
+          background-color: var(--bg-main-color) !important;
           background-image: none !important;
         }
 

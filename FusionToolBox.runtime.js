@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.31';
+  const FUSION_TOOLBOX_VERSION = '0.1.32';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1619,6 +1619,7 @@
     Utils.addStyle(
       'fusion-toolbox-nodeseek-hide-homepage-post-avatars',
       `body {
+        background-color: var(--bg-main-color) !important;
         background-image: none !important;
       }
 
