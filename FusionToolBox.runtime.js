@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.35';
+  const FUSION_TOOLBOX_VERSION = '0.1.36';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1847,17 +1847,27 @@
     ];
     const promotedTextPattern = /Promoted by|^\s*PRO\s*$/i;
 
-    const isAvatarOnlyCell = (cell, avatar) => {
+    const collapseAvatarOnlyCell = (cell, avatar) => {
       const link = cell?.firstElementChild;
 
-      return (
-        cell &&
-        !(cell.textContent || '').trim() &&
-        cell.children.length === 1 &&
-        link?.matches('a[href^="/member/"]') &&
-        link.children.length === 1 &&
-        link.firstElementChild === avatar
-      );
+      if (
+        !cell ||
+        (cell.textContent || '').trim() ||
+        cell.children.length !== 1 ||
+        !link?.matches('a[href^="/member/"]') ||
+        link.children.length !== 1 ||
+        link.firstElementChild !== avatar
+      ) {
+        return false;
+      }
+
+      link.remove();
+      cell.removeAttribute('width');
+      cell.style.setProperty('width', '0', 'important');
+      cell.style.setProperty('min-width', '0', 'important');
+      cell.style.setProperty('max-width', '0', 'important');
+      cell.style.setProperty('padding', '0', 'important');
+      return true;
     };
 
     const removeAvatars = (root = document) => {
@@ -1872,8 +1882,7 @@
       for (const avatar of avatars) {
         const cell = avatar.closest('td');
 
-        if (isAvatarOnlyCell(cell, avatar)) {
-          cell.remove();
+        if (collapseAvatarOnlyCell(cell, avatar)) {
           continue;
         }
 
