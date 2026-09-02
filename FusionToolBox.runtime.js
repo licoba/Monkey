@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.33';
+  const FUSION_TOOLBOX_VERSION = '0.1.34';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1824,11 +1824,18 @@
   },
 },
 {
-  name: 'v2ex.com-hide-sidebar-promoted-ads',
+  name: 'v2ex.com-cleanup',
   match() {
     return location.hostname === 'v2ex.com' || location.hostname === 'www.v2ex.com';
   },
   run() {
+    const avatarSelectors = [
+      'img.avatar',
+      'img[data-uid]',
+      'img[src^="https://cdn.v2ex.com/avatar/"]',
+      'img[src^="https://cdn.v2ex.com/gravatar/"]',
+    ];
+    const avatarSelector = avatarSelectors.join(',');
     const styleId = 'fusion-toolbox-v2ex-hide-sidebar-promoted-ads';
     const sidebarAdSelectors = [
       '#Rightbar .box:has(a[href*="statistics.wlai.vip"])',
@@ -1839,6 +1846,51 @@
       '#Rightbar .box:has(img[src*="ad"])',
     ];
     const promotedTextPattern = /Promoted by|^\s*PRO\s*$/i;
+
+    const isAvatarOnlyCell = (cell, avatar) => {
+      const link = cell?.firstElementChild;
+
+      return (
+        cell &&
+        !(cell.textContent || '').trim() &&
+        cell.children.length === 1 &&
+        link?.matches('a[href^="/member/"]') &&
+        link.children.length === 1 &&
+        link.firstElementChild === avatar
+      );
+    };
+
+    const removeAvatars = (root = document) => {
+      const avatars = [];
+
+      if (root.matches?.(avatarSelector)) {
+        avatars.push(root);
+      }
+
+      avatars.push(...(root.querySelectorAll?.(avatarSelector) || []));
+
+      for (const avatar of avatars) {
+        const cell = avatar.closest('td');
+
+        if (isAvatarOnlyCell(cell, avatar)) {
+          cell.remove();
+          continue;
+        }
+
+        const link = avatar.parentElement;
+
+        if (
+          link?.matches('a[href^="/member/"]') &&
+          link.children.length === 1 &&
+          link.firstElementChild === avatar
+        ) {
+          link.remove();
+          continue;
+        }
+
+        avatar.remove();
+      }
+    };
 
     const hideElement = (element) => {
       element.style.setProperty('display', 'none', 'important');
@@ -1895,6 +1947,9 @@
         max-height: 0 !important;
       }`
     );
+
+    removeAvatars();
+    Utils.observeAddedNodes(removeAvatars);
 
     Utils.onReady(() => {
       hidePromotedBoxes();

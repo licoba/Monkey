@@ -15,7 +15,7 @@
 - `ip.sb`：隐藏 Riven Cloud 推广块和常见广告节点
 - `linux.do`：隐藏顶部社区标语横幅和所有用户头像
 - `finance.sina.com.cn`：隐藏新浪财经文章页广告、浮层和广告脚本节点
-- `v2ex.com`：隐藏右侧栏推广广告
+- `v2ex.com`：移除所有用户头像，并隐藏右侧栏推广广告
 - `www.nodeseek.com`：隐藏页面网格背景、首页帖子及个人头像，并移除“欢迎新用户”模块
 - `www.tampermonkey.net/scripts.php`：隐藏用户脚本页面的左右栏、内容区和自动广告
 - `mail.chatgpt.org.uk`：隐藏 GPTMail 页面广告和推广位
