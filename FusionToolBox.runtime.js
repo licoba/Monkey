@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.32';
+  const FUSION_TOOLBOX_VERSION = '0.1.33';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1033,6 +1033,15 @@
     return location.hostname === 'linux.do';
   },
   run() {
+    Utils.addStyle(
+      'fusion-toolbox-linuxdo-hide-user-avatars',
+      `img.avatar,
+      img[src*="/user_avatar/"],
+      img[src*="/letter_avatar/"] {
+        display: none !important;
+      }`
+    );
+
     const bannerTextPattern = /真诚[、,，]\s*友善[、,，]\s*团结[、,，]\s*专业[，,]\s*共建你我引以为荣之社区[。!！]?|Where possible begins/i;
     const externalLinkDialogPattern = /打开外部链接|external link/i;
     const candidateSelectors = [

@@ -32,6 +32,16 @@
   const headTarget = document.head || document.documentElement;
   const criticalStyles = [
     {
+      match: () => location.hostname === 'linux.do',
+      css: `
+        img.avatar,
+        img[src*="/user_avatar/"],
+        img[src*="/letter_avatar/"] {
+          display: none !important;
+        }
+      `,
+    },
+    {
       match: () =>
         location.hostname === 'www.tampermonkey.net' &&
         location.pathname === '/scripts.php',
