@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.30
+// @version      0.1.31
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -31,7 +31,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.30';
+  const FUSION_TOOLBOX_VERSION = '0.1.31';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1648,7 +1648,11 @@
   run() {
     Utils.addStyle(
       'fusion-toolbox-nodeseek-hide-homepage-post-avatars',
-      `.post-list-item > a:has(> img.avatar-normal) {
+      `body {
+        background-image: none !important;
+      }
+
+      .post-list-item > a:has(> img.avatar-normal) {
         display: none !important;
       }
 

@@ -61,6 +61,10 @@
     {
       match: () => location.hostname === 'www.nodeseek.com',
       css: `
+        body {
+          background-image: none !important;
+        }
+
         .post-list-item > a:has(> img.avatar-normal) {
           display: none !important;
         }
