@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.38
+// @version      0.1.39
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -32,7 +32,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.38';
+  const FUSION_TOOLBOX_VERSION = '0.1.39';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1092,7 +1092,7 @@
 
     const bannerTextPattern = /真诚[、,，]\s*友善[、,，]\s*团结[、,，]\s*专业[，,]\s*共建你我引以为荣之社区[。!！]?|Where possible begins/i;
     const externalLinkDialogPattern = /打开外部链接|external link/i;
-    const blockedTopicTitlePattern = /鹈鹕/;
+    const blockedTopicTitlePattern = /鹈鹕|女装/;
     const siteLogoSelector = [
       '.d-header #site-logo',
       '.d-header img.logo-big',

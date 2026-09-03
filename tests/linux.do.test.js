@@ -148,22 +148,24 @@ function runModule(document) {
   };
 }
 
-test('hides only topic rows whose title contains 鹈鹕', () => {
+test('hides topic rows whose title contains a blocked keyword', () => {
   const document = new FakeDocument();
-  const blocked = new FakeElement({ topic: true, title: '大家怎么看鹈鹕这个词' });
+  const blockedPelican = new FakeElement({ topic: true, title: '大家怎么看鹈鹕这个词' });
+  const blockedCrossDressing = new FakeElement({ topic: true, title: '今天聊聊女装' });
   const allowed = new FakeElement({ topic: true, title: '普通帖子标题' });
-  document.body.append(blocked, allowed);
+  document.body.append(blockedPelican, blockedCrossDressing, allowed);
 
   runModule(document);
 
-  assert.equal(blocked.style.get('display'), 'none');
+  assert.equal(blockedPelican.style.get('display'), 'none');
+  assert.equal(blockedCrossDressing.style.get('display'), 'none');
   assert.equal(allowed.style.get('display'), undefined);
 });
 
 test('hides a matching topic row added by infinite scrolling', () => {
   const document = new FakeDocument();
   const runtime = runModule(document);
-  const blocked = new FakeElement({ topic: true, title: '又一个鹈鹕相关标题' });
+  const blocked = new FakeElement({ topic: true, title: '动态加载的女装相关标题' });
   blocked.setOwnerDocument(document);
 
   runtime.notifyAdded(blocked);
