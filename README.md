@@ -1,6 +1,6 @@
-# FusionToolBox Userscript Template
+# FusionToolBox
 
-这是一个自用油猴脚本模板，思路是：
+这是一个按网站拆分功能模块的自用 Tampermonkey 脚本：
 
 - 一个总脚本 `FusionToolBox.user.js`
 - 每个网站一个模块
@@ -20,24 +20,27 @@
 - `www.tampermonkey.net/scripts.php`：隐藏用户脚本页面的左右栏、内容区和自动广告
 - `mail.chatgpt.org.uk`：隐藏 GPTMail 页面广告和推广位
 - `chatgpt.com`：隐藏工作区成员达到使用上限的顶部横幅
-- `example.com`：空白模板模块
 
-## 使用方法
+## 安装与更新（推荐）
 
-1. 打开 Tampermonkey
-2. 新建脚本
-3. 粘贴 `FusionToolBox.user.js` 的内容
-4. 保存并刷新目标网站
+1. 从 [Greasy Fork 主脚本页面](https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox) 安装 `FusionToolBox`
+2. Tampermonkey 中只启用正式版 `FusionToolBox`
+3. 后续版本通过 Tampermonkey 自动检查更新，或在脚本菜单中手工检查更新
 
-## 推荐开发方式
+正式版是完整的单文件脚本，不依赖本地服务。日常使用不需要安装
+`FusionToolBox Loader`，也不需要运行 `start-FusionToolBox-server.py`。
 
-开发模式下，安装一次加载器脚本，真正逻辑从本地服务动态加载。
+## 本地开发（可选）
 
-1. Windows / macOS / Linux 都直接运行 `python ./start-FusionToolBox-server.py`
+需要频繁修改和调试时，可以临时使用 Loader，让浏览器从本地服务动态加载最新源码。
+
+1. macOS / Linux 运行 `python3 ./start-FusionToolBox-server.py`；Windows 运行 `py .\start-FusionToolBox-server.py`
 2. 浏览器打开 `http://127.0.0.1:8123/FusionToolBox.loader.user.js`
 3. 用 Tampermonkey 安装这个加载器
-4. 以后只改本地的 `sites/*.js` 或 `src/*.js`
-5. 保存文件后，已打开的页面会自动刷新并加载最新代码
+4. 暂时禁用正式版 `FusionToolBox`，避免同一功能重复执行
+5. 只修改本地的 `sites/*.js` 或 `src/*.js`
+6. 保存文件后，已打开的页面会自动刷新并加载最新代码
+7. 调试完成后停用或删除 Loader，重新启用正式版
 
 开发模式文件：
 
@@ -49,30 +52,19 @@
 
 开发服务器会在请求 `FusionToolBox.runtime.js` 时，实时把 `src/` 和 `sites/` 里的源文件拼成一个运行时脚本，所以开发时不需要手工先构建。
 
-当前开发加载器只对白名单网站生效：
-
-- `https://tempmail.plus/*`
-- `https://2925.com/*`
-- `https://www.meiguodizhi.com/*`
-- `https://greasyfork.org/*`
-- `https://ip.sb/*`
-- `https://www.ip.sb/*`
-- `https://linux.do/*`
-- `https://finance.sina.com.cn/*`
-- `https://v2ex.com/*`
-- `https://www.v2ex.com/*`
-- `https://www.nodeseek.com/*`
-- `https://www.tampermonkey.net/scripts.php*`
-- `https://mail.chatgpt.org.uk/*`
-- `https://chatgpt.com/*`
+Loader 和正式版都只对白名单网站生效，实际范围以各自脚本头部的 `@match` 为准。
 
 ## 发布工作流
 
-推荐工作流：
+正式发布工作流：
 
-1. 开发时运行本地服务，使用 `FusionToolBox.loader.user.js`
-2. 调试完成后执行打包脚本生成发布版 `FusionToolBox.user.js`
-3. 把生成后的 `FusionToolBox.user.js` 发布到 Greasy Fork
+1. 按需运行本地服务并使用 `FusionToolBox.loader.user.js` 调试
+2. 运行 `npm test`
+3. 递增版本号并执行构建，生成 `FusionToolBox.runtime.js` 和 `FusionToolBox.user.js`
+4. 检查 Git author、committer 及待推送历史
+5. 提交并推送 GitHub
+6. 把生成后的 `FusionToolBox.user.js` 发布到 Greasy Fork
+7. 在线核对版本号和脚本内容，再通过 Tampermonkey 验证更新
 
 ### 构建发布版
 
@@ -81,10 +73,16 @@
 - 本机已安装 Python
 - 开发模式仍然需要 Node.js 来跑本地 dev server
 
-在项目根目录执行：
+在项目根目录执行（Windows）：
 
 ```powershell
 py .\build.py
+```
+
+macOS / Linux 使用：
+
+```bash
+python3 ./build.py
 ```
 
 这个脚本会：
@@ -106,7 +104,7 @@ py .\build.py
 ```powershell
 py .\build.py
 py .\build.py --check
-py .\build.py --version 0.1.2
+py .\build.py --version 0.1.38
 py .\build.py --output .\dist\FusionToolBox.user.js
 ```
 
@@ -130,30 +128,10 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 
 版本号以 `userscript-header.txt` 为准，构建时会自动同步到发布文件里的 `FUSION_TOOLBOX_VERSION`。
 
-## 生产模式
+## 正式版
 
-如果你以后想脱离本地服务单独使用，安装：
-
-- `FusionToolBox.user.js`
-
-这是完整独立版，不依赖本地服务器，但开发时没有自动刷新。
-
-当前独立版也只对白名单网站生效：
-
-- `https://tempmail.plus/*`
-- `https://2925.com/*`
-- `https://www.meiguodizhi.com/*`
-- `https://greasyfork.org/*`
-- `https://ip.sb/*`
-- `https://www.ip.sb/*`
-- `https://linux.do/*`
-- `https://finance.sina.com.cn/*`
-- `https://v2ex.com/*`
-- `https://www.v2ex.com/*`
-- `https://www.nodeseek.com/*`
-- `https://www.tampermonkey.net/scripts.php*`
-- `https://mail.chatgpt.org.uk/*`
-- `https://chatgpt.com/*`
+`FusionToolBox.user.js` 是 Greasy Fork 分发的完整独立版，不依赖本地服务器。
+该文件由构建脚本生成，不应手工修改。
 
 ## 后续新增网站
 
