@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.36';
+  const FUSION_TOOLBOX_VERSION = '0.1.37';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1044,6 +1044,20 @@
 
     const bannerTextPattern = /真诚[、,，]\s*友善[、,，]\s*团结[、,，]\s*专业[，,]\s*共建你我引以为荣之社区[。!！]?|Where possible begins/i;
     const externalLinkDialogPattern = /打开外部链接|external link/i;
+    const blockedTopicTitlePattern = /鹈鹕/;
+    const topicContainerSelector = [
+      'tr.topic-list-item',
+      '.latest-topic-list-item',
+      '.search-result-topic',
+      '.fps-result',
+      '.topic-list-item',
+    ].join(',');
+    const topicTitleSelector = [
+      'a.title',
+      '.link-top-line a[href*="/t/"]',
+      '.main-link a[href*="/t/"]',
+      '.topic-title a[href*="/t/"]',
+    ].join(',');
     const candidateSelectors = [
       '#banner',
       '.banner-box',
@@ -1183,13 +1197,33 @@
       }
     };
 
+    const hideBlockedTopics = (root = document) => {
+      const containers = [];
+
+      if (root instanceof Element && root.matches(topicContainerSelector)) {
+        containers.push(root);
+      }
+
+      containers.push(...root.querySelectorAll(topicContainerSelector));
+
+      for (const container of containers) {
+        const title = container.querySelector(topicTitleSelector);
+
+        if (title && blockedTopicTitlePattern.test(normalizeText(title.textContent || ''))) {
+          hideElement(container);
+        }
+      }
+    };
+
     Utils.onReady(() => {
       document.addEventListener('click', openExternalLinkDirectly, true);
       hideSloganBanner();
+      hideBlockedTopics();
       autoContinueExternalLinkDialog();
 
       Utils.observeAddedNodes((node) => {
         hideSloganBanner(node);
+        hideBlockedTopics(node);
         autoContinueExternalLinkDialog(node);
       });
     });
