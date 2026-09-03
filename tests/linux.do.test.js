@@ -21,13 +21,15 @@ class FakeStyle {
 }
 
 class FakeElement {
-  constructor({ topic = false, title = null } = {}) {
+  constructor({ topic = false, title = null, siteLogo = false } = {}) {
     this.topic = topic;
     this.title = title;
+    this.siteLogo = siteLogo;
     this.children = [];
     this.parentElement = null;
     this.ownerDocument = null;
     this.style = new FakeStyle();
+    this.removed = false;
   }
 
   append(...children) {
@@ -45,19 +47,40 @@ class FakeElement {
     }
   }
 
-  matches() {
-    return this.topic;
+  matches(selector) {
+    if (selector.includes('#site-logo')) {
+      return this.siteLogo;
+    }
+
+    if (selector.includes('topic-list-item')) {
+      return this.topic;
+    }
+
+    return false;
   }
 
-  querySelector() {
-    return this.title === null ? null : { textContent: this.title };
+  querySelector(selector) {
+    if (selector.includes('a.title') && this.title !== null) {
+      return { textContent: this.title };
+    }
+
+    return this.querySelectorAll(selector)[0] || null;
   }
 
-  querySelectorAll() {
+  querySelectorAll(selector) {
     return this.children.flatMap((child) => [
-      ...(child.topic ? [child] : []),
-      ...child.querySelectorAll(),
+      ...(child.matches(selector) ? [child] : []),
+      ...child.querySelectorAll(selector),
     ]);
+  }
+
+  remove() {
+    if (this.parentElement) {
+      this.parentElement.children = this.parentElement.children.filter((child) => child !== this);
+    }
+
+    this.parentElement = null;
+    this.removed = true;
   }
 
   getBoundingClientRect() {
@@ -77,8 +100,8 @@ class FakeDocument {
 
   addEventListener() {}
 
-  querySelectorAll() {
-    return this.body.querySelectorAll();
+  querySelectorAll(selector) {
+    return this.body.querySelectorAll(selector);
   }
 
   createTreeWalker() {
@@ -88,6 +111,7 @@ class FakeDocument {
 
 function runModule(document) {
   let addedNodeCallback = null;
+  const styles = [];
   const context = {
     document,
     Document: FakeDocument,
@@ -96,7 +120,9 @@ function runModule(document) {
     location: { hostname: 'linux.do', href: 'https://linux.do/latest' },
     window: { innerHeight: 900 },
     Utils: {
-      addStyle() {},
+      addStyle(_id, cssText) {
+        styles.push(cssText);
+      },
       onReady(callback) {
         callback();
       },
@@ -114,6 +140,7 @@ function runModule(document) {
   runnableModule.run();
 
   return {
+    styles,
     notifyAdded(node) {
       assert.ok(addedNodeCallback);
       addedNodeCallback(node);
@@ -142,4 +169,26 @@ test('hides a matching topic row added by infinite scrolling', () => {
   runtime.notifyAdded(blocked);
 
   assert.equal(blocked.style.get('display'), 'none');
+});
+
+test('removes the site logo and replaces it with the LINUX DO text style', () => {
+  const document = new FakeDocument();
+  const logo = new FakeElement({ siteLogo: true });
+  document.body.append(logo);
+
+  const runtime = runModule(document);
+
+  assert.equal(logo.removed, true);
+  assert.match(runtime.styles.join('\n'), /content: 'LINUX DO'/);
+});
+
+test('removes a site logo added after initial page load', () => {
+  const document = new FakeDocument();
+  const runtime = runModule(document);
+  const logo = new FakeElement({ siteLogo: true });
+  logo.setOwnerDocument(document);
+
+  runtime.notifyAdded(logo);
+
+  assert.equal(logo.removed, true);
 });

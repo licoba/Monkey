@@ -10,12 +10,35 @@
       img[src*="/user_avatar/"],
       img[src*="/letter_avatar/"] {
         display: none !important;
+      }
+
+      .d-header #site-logo,
+      .d-header img.logo-big,
+      .d-header img.logo-small,
+      .d-header img.logo-mobile {
+        display: none !important;
+      }
+
+      .d-header .title > a::after,
+      .d-header .title a[href="/"]::after {
+        content: 'LINUX DO';
+        color: var(--primary) !important;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        white-space: nowrap;
       }`
     );
 
     const bannerTextPattern = /真诚[、,，]\s*友善[、,，]\s*团结[、,，]\s*专业[，,]\s*共建你我引以为荣之社区[。!！]?|Where possible begins/i;
     const externalLinkDialogPattern = /打开外部链接|external link/i;
     const blockedTopicTitlePattern = /鹈鹕/;
+    const siteLogoSelector = [
+      '.d-header #site-logo',
+      '.d-header img.logo-big',
+      '.d-header img.logo-small',
+      '.d-header img.logo-mobile',
+    ].join(',');
     const topicContainerSelector = [
       'tr.topic-list-item',
       '.latest-topic-list-item',
@@ -186,13 +209,29 @@
       }
     };
 
+    const removeSiteLogo = (root = document) => {
+      const logos = [];
+
+      if (root.matches?.(siteLogoSelector)) {
+        logos.push(root);
+      }
+
+      logos.push(...(root.querySelectorAll?.(siteLogoSelector) || []));
+
+      for (const logo of logos) {
+        logo.remove();
+      }
+    };
+
     Utils.onReady(() => {
       document.addEventListener('click', openExternalLinkDirectly, true);
+      removeSiteLogo();
       hideSloganBanner();
       hideBlockedTopics();
       autoContinueExternalLinkDialog();
 
       Utils.observeAddedNodes((node) => {
+        removeSiteLogo(node);
         hideSloganBanner(node);
         hideBlockedTopics(node);
         autoContinueExternalLinkDialog(node);
