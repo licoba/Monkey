@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.37';
+  const FUSION_TOOLBOX_VERSION = '0.1.38';
 
   const Utils = {
     addStyle(id, cssText) {

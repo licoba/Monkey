@@ -30,6 +30,10 @@
 正式版是完整的单文件脚本，不依赖本地服务。日常使用不需要安装
 `FusionToolBox Loader`，也不需要运行 `start-FusionToolBox-server.py`。
 
+每次功能修改完成后，先递增版本并构建新的 `FusionToolBox.user.js`，再临时启动
+本地服务，通过 `http://127.0.0.1:8123/FusionToolBox.user.js` 交给 Tampermonkey
+安装。安装的是独立脚本，完成后即可关闭本地服务。
+
 ## 本地开发（可选）
 
 需要频繁修改和调试时，可以临时使用 Loader，让浏览器从本地服务动态加载最新源码。
