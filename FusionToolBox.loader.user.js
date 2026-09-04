@@ -20,6 +20,7 @@
 // @match        https://www.nodeseek.com/*
 // @match        https://www.tampermonkey.net/scripts.php*
 // @match        https://mail.chatgpt.org.uk/*
+// @match        https://wx.mail.qq.com/*
 // @match        https://chatgpt.com/*
 // @run-at       document-start
 // @grant        GM_xmlhttpRequest
