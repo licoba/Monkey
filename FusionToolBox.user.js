@@ -2187,8 +2187,10 @@
       .mail-detail-subject,
       .mail-subject-text,
       .mail-detail-basic,
+      .mail-detail-content,
       .cmp-account-nick,
       .cmp-account-email,
+      .cmp-account-inner,
       .time-text,
       .sidebar-menu-text,
       .sidebar-feature-title,
@@ -2205,6 +2207,9 @@
       .mail-digest,
       .title-total,
       .mail-list-page-toolbar-mail-total,
+      .basic-item-name,
+      .sub-mail-digest,
+      .quick-reply-text,
       .user-email,
       [class*='placeholder'],
       [class*='secondary'],
@@ -2216,6 +2221,24 @@
         background: var(--fusion-qqmail-panel-raised) !important;
         color: var(--fusion-qqmail-text) !important;
         border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-detail-alert-bar .alert-text {
+        color: var(--fusion-qqmail-text) !important;
+      }
+
+      .qmbox {
+        color: var(--fusion-qqmail-text) !important;
+      }
+
+      .qmbox [style*='color: black' i],
+      .qmbox [style*='color:black' i],
+      .qmbox [style*='color: #000' i],
+      .qmbox [style*='color:#000' i],
+      .qmbox [color='black' i],
+      .qmbox [color='#000'],
+      .qmbox [color='#000000'] {
+        color: var(--fusion-qqmail-text) !important;
       }
 
       .qmbox > div[style*='font-family: -apple-system, system-ui'][style*='color: rgb(0, 0, 0)'] {
@@ -2276,6 +2299,13 @@
       .frame-sidebar-compose-btn .xmail-ui-icon,
       .frame-sidebar-compose-btn svg {
         color: #ffffff !important;
+      }
+
+      .frame-sidebar-menu[data-sidebar-dir-id='1003'],
+      .frame-sidebar-menu[data-sidebar-dir-id='1004'],
+      .frame-sidebar-menu[data-sidebar-dir-id='1006'],
+      .frame-sidebar-menu[data-sidebar-dir-id='1007'] {
+        display: none !important;
       }
 
       .xmail-ui-icon,

@@ -42,6 +42,10 @@ test('injects a complete dark theme for QQ Mail surfaces and controls', () => {
   assert.match(styles[0].cssText, /\[role='dialog'\]/);
   assert.match(styles[0].cssText, /\[contenteditable='true'\]/);
   assert.match(styles[0].cssText, /\.mail-detail-alert-bar/);
+  assert.match(styles[0].cssText, /\.qmbox \[style\*='color: black' i\]/);
   assert.match(styles[0].cssText, /\.qmbox > div\[style\*='font-family: -apple-system, system-ui'\]/);
+  for (const directoryId of ['1003', '1004', '1006', '1007']) {
+    assert.match(styles[0].cssText, new RegExp(`data-sidebar-dir-id='${directoryId}'`));
+  }
   assert.match(styles[0].cssText, /\*:focus-visible/);
 });

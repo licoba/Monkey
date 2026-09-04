@@ -19,7 +19,7 @@
 - `www.nodeseek.com`：隐藏页面网格背景、首页帖子及个人头像，并移除“欢迎新用户”模块
 - `www.tampermonkey.net/scripts.php`：隐藏用户脚本页面的左右栏、内容区和自动广告
 - `mail.chatgpt.org.uk`：隐藏 GPTMail 页面广告和推广位
-- `wx.mail.qq.com`：为新版 QQ 邮箱提供完整暗色主题
+- `wx.mail.qq.com`：为新版 QQ 邮箱提供完整暗色主题，并隐藏日历、记事本、每日悦读和文档入口
 - `chatgpt.com`：隐藏工作区成员达到使用上限的顶部横幅
 
 ## 安装与更新（推荐）
