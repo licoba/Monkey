@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.41
+// @version      0.1.42
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -33,7 +33,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.41';
+  const FUSION_TOOLBOX_VERSION = '0.1.42';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -2361,6 +2361,32 @@
         color: var(--fusion-qqmail-text) !important;
         border-color: var(--fusion-qqmail-border) !important;
         box-shadow: 0 12px 32px rgb(0 0 0 / 45%) !important;
+      }
+
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-mask {
+        background: rgb(0 0 0 / 68%) !important;
+      }
+
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-body,
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-header,
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-title,
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-content,
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-footer {
+        background: var(--fusion-qqmail-panel-raised) !important;
+        color: var(--fusion-qqmail-text) !important;
+        border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-body {
+        box-shadow: 0 18px 48px rgb(0 0 0 / 55%) !important;
+      }
+
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-title-text {
+        color: var(--fusion-qqmail-text) !important;
+      }
+
+      html body.page-color-theme .xmail-ui-dialog .ui-dialog-subtitle {
+        color: var(--fusion-qqmail-muted) !important;
       }
 
       [class*='compose'][class*='page'],

@@ -40,6 +40,10 @@ test('injects a complete dark theme for QQ Mail surfaces and controls', () => {
   assert.match(styles[0].cssText, /\.frame-sidebar/);
   assert.match(styles[0].cssText, /\.mail-list-page-item/);
   assert.match(styles[0].cssText, /\[role='dialog'\]/);
+  assert.match(styles[0].cssText, /\.xmail-ui-dialog \.ui-dialog-body/);
+  assert.match(styles[0].cssText, /\.xmail-ui-dialog \.ui-dialog-header/);
+  assert.match(styles[0].cssText, /\.xmail-ui-dialog \.ui-dialog-content/);
+  assert.match(styles[0].cssText, /\.xmail-ui-dialog \.ui-dialog-footer/);
   assert.match(styles[0].cssText, /\[contenteditable='true'\]/);
   assert.match(styles[0].cssText, /\.mail-detail-alert-bar/);
   assert.match(styles[0].cssText, /\.mail-list-page-items-notice-bar \.notice-bar-body/);
