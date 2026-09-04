@@ -2195,6 +2195,18 @@
         color: var(--fusion-qqmail-text) !important;
       }
 
+      .mail-list-page-items-notice-bar,
+      .mail-list-page-items-notice-bar .notice-bar-body {
+        background: var(--fusion-qqmail-panel-raised) !important;
+        color: var(--fusion-qqmail-text) !important;
+        border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-list-page-items-notice-bar .xmail-ui-hyperlink,
+      .mail-list-page-items-notice-bar .text-margin-link {
+        color: var(--fusion-qqmail-accent) !important;
+      }
+
       .qmbox {
         color: var(--fusion-qqmail-text) !important;
       }
@@ -2253,8 +2265,14 @@
         background-color: var(--fusion-qqmail-hover) !important;
       }
 
-      .frame-sidebar-compose-btn {
-        background: #2878d8 !important;
+      .frame-sidebar-compose-btn,
+      .frame-sidebar-compose-btn:hover,
+      .frame-sidebar-compose-btn:focus,
+      .frame-sidebar-compose-btn:focus-visible,
+      .frame-sidebar-compose-btn:active,
+      .frame-sidebar-compose-btn[class*='active'] {
+        background-color: #2878d8 !important;
+        background-image: none !important;
         color: #ffffff !important;
         border-color: #3989e8 !important;
       }
