@@ -43,7 +43,9 @@ test('injects a complete dark theme for QQ Mail surfaces and controls', () => {
   assert.match(styles[0].cssText, /\[contenteditable='true'\]/);
   assert.match(styles[0].cssText, /\.mail-detail-alert-bar/);
   assert.match(styles[0].cssText, /\.mail-list-page-items-notice-bar \.notice-bar-body/);
-  assert.match(styles[0].cssText, /\.frame-sidebar-compose-btn:active/);
+  assert.match(styles[0].cssText, /body\.page-color-theme .* \.frame-sidebar-compose-btn:hover/);
+  assert.match(styles[0].cssText, /\.frame-sidebar-compose-btn::before/);
+  assert.match(styles[0].cssText, /box-shadow: inset 0 0 0 100vmax/);
   assert.match(styles[0].cssText, /background-image: none !important/);
   assert.match(styles[0].cssText, /\.qmbox \[style\*='color: black' i\]/);
   assert.match(styles[0].cssText, /\.qmbox > div\[style\*='font-family: -apple-system, system-ui'\]/);

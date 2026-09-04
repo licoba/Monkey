@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.40
+// @version      0.1.41
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -33,7 +33,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.40';
+  const FUSION_TOOLBOX_VERSION = '0.1.41';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -2297,20 +2297,33 @@
         background-color: var(--fusion-qqmail-hover) !important;
       }
 
-      .frame-sidebar-compose-btn,
-      .frame-sidebar-compose-btn:hover,
-      .frame-sidebar-compose-btn:focus,
-      .frame-sidebar-compose-btn:focus-visible,
-      .frame-sidebar-compose-btn:active,
-      .frame-sidebar-compose-btn[class*='active'] {
+      html body.page-color-theme .xmail-page-root .frame-sidebar .frame-sidebar-compose-btn {
         background-color: #2878d8 !important;
         background-image: none !important;
         color: #ffffff !important;
         border-color: #3989e8 !important;
+        box-shadow: inset 0 0 0 100vmax #2878d8 !important;
+        isolation: isolate;
+        overflow: hidden;
       }
 
-      .frame-sidebar-compose-btn:hover {
-        background: #3388e8 !important;
+      html body.page-color-theme .xmail-page-root .frame-sidebar .frame-sidebar-compose-btn:hover,
+      html body.page-color-theme .xmail-page-root .frame-sidebar .frame-sidebar-compose-btn:focus,
+      html body.page-color-theme .xmail-page-root .frame-sidebar .frame-sidebar-compose-btn:focus-visible {
+        background-color: #3388e8 !important;
+        box-shadow: inset 0 0 0 100vmax #3388e8 !important;
+      }
+
+      html body.page-color-theme .xmail-page-root .frame-sidebar .frame-sidebar-compose-btn:active,
+      html body.page-color-theme .xmail-page-root .frame-sidebar .frame-sidebar-compose-btn[class*='active'] {
+        background-color: #226bc2 !important;
+        box-shadow: inset 0 0 0 100vmax #226bc2 !important;
+      }
+
+      .frame-sidebar-compose-btn::before,
+      .frame-sidebar-compose-btn::after {
+        background: transparent !important;
+        background-image: none !important;
       }
 
       .frame-sidebar-compose-btn .compose-btn-text,
