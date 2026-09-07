@@ -23,7 +23,7 @@ Apply this workflow after every completed user-facing userscript behavior change
    `licoba <19327381+licoba@users.noreply.github.com>` and audit all outgoing
    commits. Public commit messages must be in English and use Conventional
    Commits.
-7. Commit and push the generated artifacts together with their source and tests.
+7. Commit the generated artifacts together with their source and tests.
 8. Check that TCP port `8123` is free. Do not stop an unrelated process if it is
    occupied.
 9. Start the temporary server with
@@ -33,6 +33,7 @@ Apply this workflow after every completed user-facing userscript behavior change
     new version, and contains the expected change.
 11. Give the user this exact standalone-script installation URL:
     `http://127.0.0.1:8123/FusionToolBox.user.js`.
+    Then push the tested commit to `main` and verify the Greasy Fork sync below.
 12. Keep the temporary server alive until the user confirms installation, then
     stop it and verify that port `8123` is no longer listening.
 
@@ -47,16 +48,20 @@ generated userscript.
 ## Greasy Fork Publishing
 
 - The canonical script ID is `580054`, owned by `licoba` (user ID `227261`).
-- Start updates from `https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox`
+- Automatic publishing is enabled: GitHub push webhook `675575673` on
+  `licoba/Monkey` updates the existing script from
+  `https://raw.githubusercontent.com/licoba/Monkey/main/FusionToolBox.user.js`.
+  The user authorized this workflow; a push changing this artifact on `main`
+  triggers publication. Complete the local validation above before pushing.
+- Verify webhook delivery and the script's sync status, version, and code after
+  pushing. HTTP 200 from the webhook alone does not prove the code was synced;
+  allow time for Greasy Fork's asynchronous processing. Never create a duplicate
+  script if sync is delayed. Keep webhook secrets out of the repository and logs.
+- For manual recovery, start from `https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox`
   and use its update/new-version link. Never use the generic
   `/script_versions/new` page, which creates a separate script.
 - Verify that the update form belongs to script `580054` before submitting.
   After a login redirect, return to the canonical script page first.
 - After publishing, verify the returned script ID is still `580054`, in addition
   to checking the version and content. A matching name is not sufficient.
-- A local installation delivery does not by itself authorize a Greasy Fork
-  publication.
-- When a release includes Greasy Fork publishing, complete and verify the local
-  installation delivery first, then publish the same tested
-  `FusionToolBox.user.js` artifact.
 - Verify the online version and content after publishing.

@@ -200,8 +200,8 @@ def main() -> int:
     print(f"Script: FusionToolBox")
     print(f"Version: {version}")
     print(f"Output: {output_path}")
-    print("Next: open https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox and choose Update.")
-    print("Verify script ID 580054 before and after publishing; never use the generic new-script page.")
+    print("Next: complete local validation, then push the tested artifact to main for Greasy Fork webhook sync.")
+    print("Verify sync status, version, and code at https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox.")
     return 0
 
 

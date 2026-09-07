@@ -122,6 +122,13 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 
 ### 发布到 Greasy Fork
 
+已配置 GitHub Webhook 自动同步：主脚本 `580054` 从 `main` 分支的
+[`FusionToolBox.user.js`](https://raw.githubusercontent.com/licoba/Monkey/main/FusionToolBox.user.js)
+更新。完成测试、构建和本地安装地址验证后，将源码、测试与生成文件一起推送到 `main`，无需再到网页上传。
+随后检查 GitHub Webhook 投递结果和油叉同步状态、版本、代码；Webhook 返回 HTTP 200 仅表示通知已接收，同步处理可能延迟。
+
+自动同步异常时，按以下流程手动更新已有脚本：
+
 1. 确认 `userscript-header.txt` 里的 `@version` 已递增
 2. 运行 `py .\build.py`
 3. 打开[主脚本页面](https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox)，从该页面进入“更新”或“发布新版本”
