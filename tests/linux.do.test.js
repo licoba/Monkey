@@ -84,7 +84,7 @@ class FakeElement {
   }
 
   getBoundingClientRect() {
-    return { top: 500 };
+    throw new Error('LinuxDO enhancements must not measure page layout');
   }
 }
 
@@ -105,7 +105,7 @@ class FakeDocument {
   }
 
   createTreeWalker() {
-    return { nextNode: () => null };
+    throw new Error('LinuxDO enhancements must not walk page text');
   }
 }
 
@@ -193,4 +193,41 @@ test('removes a site logo added after initial page load', () => {
   runtime.notifyAdded(logo);
 
   assert.equal(logo.removed, true);
+});
+
+test('limits startup queries to logos and topic rows', () => {
+  const document = new FakeDocument();
+  const selectors = [];
+  const query = document.querySelectorAll.bind(document);
+  document.querySelectorAll = (selector) => {
+    selectors.push(selector);
+    return query(selector);
+  };
+
+  runModule(document);
+
+  assert.equal(selectors.length, 2);
+  assert.ok(selectors.every((selector) => /#site-logo|topic-list-item/.test(selector)));
+});
+
+test('processes added subtrees without rescanning the document or existing page', () => {
+  const document = new FakeDocument();
+  const runtime = runModule(document);
+  const failGlobalScan = () => { throw new Error('Unexpected whole-page scan'); };
+  document.querySelectorAll = failGlobalScan;
+  document.body.querySelectorAll = failGlobalScan;
+  document.documentElement.querySelectorAll = failGlobalScan;
+
+  for (let index = 0; index < 100; index++) {
+    const subtree = new FakeElement();
+    const blocked = new FakeElement({ topic: true, title: '女装主题' });
+    const allowed = new FakeElement({ topic: true, title: '普通主题' });
+    const logo = new FakeElement({ siteLogo: true });
+    subtree.append(blocked, allowed, logo);
+    document.body.append(subtree);
+    runtime.notifyAdded(subtree);
+    assert.equal(blocked.style.get('display'), 'none');
+    assert.equal(allowed.style.get('display'), undefined);
+    assert.equal(logo.removed, true);
+  }
 });
