@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.43';
+  const FUSION_TOOLBOX_VERSION = '0.1.44';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -274,6 +274,32 @@
         background-image: linear-gradient(to left, var(--fusion-eagle-bg), transparent) !important;
       }
       .el-tabs__nav-wrap::after { background-color: var(--fusion-eagle-border) !important; }
+      article [class~='bg-white/[0.4]'], .think-status {
+        background: var(--fusion-eagle-surface) !important;
+        color: var(--fusion-eagle-muted) !important;
+      }
+      .think-content {
+        color: var(--fusion-eagle-muted) !important;
+        border-color: var(--fusion-eagle-border) !important;
+      }
+      article [class~='bg-white/[0.4]'] svg [fill]:not([fill='none']) {
+        fill: var(--fusion-eagle-muted) !important;
+      }
+      article .nuxt-icon.svg-icon.cursor-pointer {
+        color: var(--fusion-eagle-muted) !important;
+        border-radius: 4px;
+        transition: color 120ms ease, background-color 120ms ease;
+      }
+      article .nuxt-icon.svg-icon.cursor-pointer:hover {
+        color: var(--fusion-eagle-text) !important;
+        background-color: var(--fusion-eagle-hover) !important;
+      }
+      article .nuxt-icon.svg-icon.cursor-pointer svg [fill]:not([fill='none']) {
+        fill: currentColor !important;
+      }
+      article .nuxt-icon.svg-icon.cursor-pointer svg [stroke]:not([stroke='none']) {
+        stroke: currentColor !important;
+      }
       .el-tabs .el-tabs__item.is-active, .el-tabs .el-tabs__item:hover,
       .el-select-dropdown__item.is-selected { color: var(--fusion-eagle-accent) !important; }
       .el-button--primary:not(.is-plain), .el-button--primary:not(.is-plain):hover {
