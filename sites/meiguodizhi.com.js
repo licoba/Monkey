@@ -41,18 +41,18 @@
       .pagination > li > span,
       .jumbotron,
       footer {
-        background: #111827 !important;
-        color: #e5e7eb !important;
-        border-color: #374151 !important;
+        background: #292a2d !important;
+        color: #e4e4e7 !important;
+        border-color: #41434a !important;
       }
       html,
       body {
-        background: #0b1220 !important;
-        color: #e5e7eb !important;
+        background: #292a2d !important;
+        color: #e4e4e7 !important;
       }
       .content {
-        background: #111827 !important;
-        border: 1px solid #334155 !important;
+        background: #292a2d !important;
+        border: 1px solid #41434a !important;
         box-shadow: none !important;
       }
       .navbar.navbar-default,
@@ -61,25 +61,25 @@
       #nav-top-1 .item,
       .navbar-header.sign-2,
       .visible-xs.sign {
-        background: #111827 !important;
-        border-color: #334155 !important;
+        background: #292a2d !important;
+        border-color: #41434a !important;
         background-image: none !important;
         box-shadow: none !important;
       }
       #nav-top-1 .item {
-        border-bottom: 1px solid #243041 !important;
+        border-bottom: 1px solid #3a3c42 !important;
       }
       #nav-top-1 .item a,
       .navbar-header.sign-2 a,
       .visible-xs.sign a {
-        color: #e5e7eb !important;
+        color: #e4e4e7 !important;
       }
       .navbar-default .navbar-toggle {
-        border-color: #475569 !important;
-        background: #0f172a !important;
+        border-color: #535660 !important;
+        background: #303136 !important;
       }
       .navbar-default .navbar-toggle .icon-bar {
-        background-color: #e5e7eb !important;
+        background-color: #e4e4e7 !important;
       }
       .detail,
       .indexpage,
@@ -88,8 +88,8 @@
       .row.item,
       .row.detail {
         background: transparent !important;
-        color: #e5e7eb !important;
-        border-color: #334155 !important;
+        color: #e4e4e7 !important;
+        border-color: #41434a !important;
       }
       .c-te,
       .c-te tr,
@@ -98,25 +98,25 @@
       .table.c-te > tbody > tr > td,
       .table.c-te > tbody > tr > th {
         background: transparent !important;
-        color: #e5e7eb !important;
-        border-color: #334155 !important;
+        color: #e4e4e7 !important;
+        border-color: #41434a !important;
       }
       .boder-none,
       input.boder-none {
         background: transparent !important;
-        color: #e5e7eb !important;
+        color: #e4e4e7 !important;
         border: none !important;
         box-shadow: none !important;
       }
       #city {
-        background: #0f172a !important;
-        color: #e5e7eb !important;
-        border: 1px solid #475569 !important;
+        background: #303136 !important;
+        color: #e4e4e7 !important;
+        border: 1px solid #535660 !important;
       }
       h1, h2, h3, h4, h5, h6,
       p, span, div, li, dt, dd, td, th, label, strong, small,
       a:not(.btn) {
-        color: #e5e7eb !important;
+        color: #e4e4e7 !important;
       }
       a,
       .breadcrumb > li + li:before,
@@ -124,7 +124,7 @@
       .panel-title,
       .nav > li > a,
       .navbar-brand {
-        color: #7dd3fc !important;
+        color: #8aafff !important;
       }
       .panel-heading,
       .navbar,
@@ -134,33 +134,33 @@
       .label,
       .badge,
       [class*="header"] {
-        background: #1f6feb !important;
-        color: #f8fafc !important;
-        border-color: #2563eb !important;
+        background: #303136 !important;
+        color: #f4f4f5 !important;
+        border-color: #41434a !important;
       }
       p.title,
       .title {
-        background: #172033 !important;
-        color: #e5e7eb !important;
-        border-left: 3px solid #38bdf8 !important;
-        border-bottom: 1px solid #334155 !important;
+        background: #303136 !important;
+        color: #e4e4e7 !important;
+        border-left: 3px solid #6e9bff !important;
+        border-bottom: 1px solid #41434a !important;
       }
       p.title b,
       .title b {
-        color: #f8fafc !important;
+        color: #f4f4f5 !important;
       }
       .btn,
       button,
       input,
       select,
       textarea {
-        background: #0f172a !important;
-        color: #e5e7eb !important;
-        border-color: #475569 !important;
+        background: #303136 !important;
+        color: #e4e4e7 !important;
+        border-color: #535660 !important;
       }
       input::placeholder,
       textarea::placeholder {
-        color: #94a3b8 !important;
+        color: #a6a8b0 !important;
       }
       hr,
       .table > thead > tr > th,
@@ -171,7 +171,7 @@
       .panel,
       .panel-heading,
       .panel-footer {
-        border-color: #334155 !important;
+        border-color: #41434a !important;
       }
       .row,
       .col-md-12,
@@ -210,33 +210,79 @@
       [class*="all-country"] a,
       [class*="area-list"],
       [class*="area-list"] a {
-        background: #111827 !important;
-        color: #cbd5e1 !important;
-        border-color: #334155 !important;
+        background: #292a2d !important;
+        color: #b8bbc4 !important;
+        border-color: #41434a !important;
       }
       #all-c {
-        background: #111827 !important;
-        border-top: 1px solid #334155 !important;
+        background: #292a2d !important;
+        border-top: 1px solid #41434a !important;
       }
       #all-c .all-c-t,
       #all-c p,
       #all-c a {
-        color: #e5e7eb !important;
+        color: #e4e4e7 !important;
       }
       #all-c .all-c-t {
-        background: #111827 !important;
-        color: #e5e7eb !important;
-        border-bottom: 1px solid #334155 !important;
+        background: #292a2d !important;
+        color: #e4e4e7 !important;
+        border-bottom: 1px solid #41434a !important;
       }
       #all-c a:hover {
-        color: #7dd3fc !important;
+        color: #8aafff !important;
       }
       h2.text-center,
       h3.text-center,
       h4.text-center,
       .text-center {
-        color: #e5e7eb !important;
+        color: #e4e4e7 !important;
       }
+      .navbar.navbar-default,
+      #nav-top-1, #nav-top-1 .i-m-n, #nav-top-1 .item,
+      .navbar-header.sign-2, .visible-xs.sign,
+      .breadcrumb, .panel-heading, .panel-footer {
+        background: #212327 !important;
+      }
+      .ui_dialog, .modal-content, .dropdown-menu {
+        background: #303136 !important;
+        color: #e4e4e7 !important;
+        border-color: #484a51 !important;
+        box-shadow: 0 12px 32px rgb(0 0 0 / 35%) !important;
+      }
+      .ui_dialog_mask { background: rgb(0 0 0 / 65%) !important; }
+      a:not(.btn), #nav-top-1 .item a:hover, #all-c a:hover {
+        color: #8aafff !important;
+      }
+      #nav-top-1 .item:hover, .dropdown-menu > li > a:hover,
+      .btn-default:hover, .table-hover > tbody > tr:hover {
+        background: #3a3c42 !important;
+      }
+      .btn.btn-primary, .btn.btn-success {
+        background: #4d6bfe !important;
+        border-color: #4d6bfe !important;
+        color: #fff !important;
+      }
+      .btn.btn-primary:hover, .btn.btn-success:hover,
+      .btn.btn-primary:focus-visible, .btn.btn-success:focus-visible {
+        background: #607bff !important;
+        border-color: #607bff !important;
+      }
+      .btn.btn-primary:active, .btn.btn-success:active {
+        background: #3e58df !important;
+        border-color: #3e58df !important;
+      }
+      #city:focus, .form-control:focus, #dialog_textarea:focus {
+        border-color: #6e9bff !important;
+        box-shadow: 0 0 0 2px rgb(110 155 255 / 18%) !important;
+        outline: none !important;
+      }
+      input:disabled, button:disabled, .btn.disabled {
+        background: #35373d !important;
+        color: #858995 !important;
+        border-color: #484a51 !important;
+      }
+      ::selection { background: #4563a0; color: #fff; }
+      :root { scrollbar-color: #5c606a #212327; }
       #all-c + * {
         display: none !important;
       }
