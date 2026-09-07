@@ -195,6 +195,14 @@ test('removes a site logo added after initial page load', () => {
   assert.equal(logo.removed, true);
 });
 
+test('hides only the global community guidelines notice with a persistent CSS rule', () => {
+  const runtime = runModule(new FakeDocument());
+  const css = runtime.styles.join('\n');
+
+  assert.match(css, /#global-notice-alert-global-notice:has\(a\[href="\/guidelines"\]\)\s*\{\s*display: none !important;\s*\}/);
+  assert.doesNotMatch(css, /(?:^|\n)\s*\.alert(?:\s|[.,:{])/);
+});
+
 test('limits startup queries to logos and topic rows', () => {
   const document = new FakeDocument();
   const selectors = [];

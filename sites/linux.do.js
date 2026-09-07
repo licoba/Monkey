@@ -12,6 +12,10 @@
         display: none !important;
       }
 
+      #global-notice-alert-global-notice:has(a[href="/guidelines"]) {
+        display: none !important;
+      }
+
       .d-header #site-logo,
       .d-header img.logo-big,
       .d-header img.logo-small,

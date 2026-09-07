@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.48';
+  const FUSION_TOOLBOX_VERSION = '0.1.49';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1282,6 +1282,10 @@
       `img.avatar,
       img[src*="/user_avatar/"],
       img[src*="/letter_avatar/"] {
+        display: none !important;
+      }
+
+      #global-notice-alert-global-notice:has(a[href="/guidelines"]) {
         display: none !important;
       }
 
