@@ -199,8 +199,16 @@ test('hides only the global community guidelines notice with a persistent CSS ru
   const runtime = runModule(new FakeDocument());
   const css = runtime.styles.join('\n');
 
-  assert.match(css, /#global-notice-alert-global-notice:has\(a\[href="\/guidelines"\]\)\s*\{\s*display: none !important;\s*\}/);
+  assert.match(css, /#global-notice-alert-global-notice:has\(a\[href="\/guidelines"\]\),\s*\.welcome-banner__title\s*\{\s*display: none !important;\s*\}/);
   assert.doesNotMatch(css, /(?:^|\n)\s*\.alert(?:\s|[.,:{])/);
+});
+
+test('hides the welcome title without hiding the welcome search controls', () => {
+  const runtime = runModule(new FakeDocument());
+  const css = runtime.styles.join('\n');
+
+  assert.match(css, /\.welcome-banner__title\s*\{\s*display: none !important;/);
+  assert.doesNotMatch(css, /\.welcome-banner__(?:wrap|search-menu)\b/);
 });
 
 test('limits startup queries to logos and topic rows', () => {

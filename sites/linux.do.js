@@ -12,7 +12,8 @@
         display: none !important;
       }
 
-      #global-notice-alert-global-notice:has(a[href="/guidelines"]) {
+      #global-notice-alert-global-notice:has(a[href="/guidelines"]),
+      .welcome-banner__title {
         display: none !important;
       }
 

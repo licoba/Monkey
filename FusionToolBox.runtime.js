@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.49';
+  const FUSION_TOOLBOX_VERSION = '0.1.50';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -1285,7 +1285,8 @@
         display: none !important;
       }
 
-      #global-notice-alert-global-notice:has(a[href="/guidelines"]) {
+      #global-notice-alert-global-notice:has(a[href="/guidelines"]),
+      .welcome-banner__title {
         display: none !important;
       }
 
