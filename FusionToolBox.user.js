@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.44
+// @version      0.1.45
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -34,7 +34,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.44';
+  const FUSION_TOOLBOX_VERSION = '0.1.45';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -365,6 +365,11 @@
       }
       .markdown-body a { color: var(--fusion-eagle-accent) !important; }
       :focus-visible { outline-color: var(--fusion-eagle-accent); }
+      .drag-drop-container [contenteditable='true']:focus,
+      .drag-drop-container [contenteditable='true']:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+      }
       ::selection { background: #4563a0; color: #fff; }
       :root { scrollbar-color: #5c606a var(--fusion-eagle-sidebar); }
       ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: var(--fusion-eagle-sidebar); }

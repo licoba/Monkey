@@ -230,6 +230,11 @@
       }
       .markdown-body a { color: var(--fusion-eagle-accent) !important; }
       :focus-visible { outline-color: var(--fusion-eagle-accent); }
+      .drag-drop-container [contenteditable='true']:focus,
+      .drag-drop-container [contenteditable='true']:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+      }
       ::selection { background: #4563a0; color: #fff; }
       :root { scrollbar-color: #5c606a var(--fusion-eagle-sidebar); }
       ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: var(--fusion-eagle-sidebar); }

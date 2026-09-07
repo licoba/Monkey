@@ -33,6 +33,7 @@ test('installs its global stylesheet without reading or changing account data', 
   assert.match(css, /article \[class~='bg-white\/\[0\.4\]'\], \.think-status\s*\{\s*background: var\(--fusion-eagle-surface\) !important;/);
   assert.match(css, /article \.nuxt-icon\.svg-icon\.cursor-pointer svg \[fill\]:not\(\[fill='none'\]\)/);
   assert.match(css, /article \.nuxt-icon\.svg-icon\.cursor-pointer:hover/);
+  assert.match(css, /\.drag-drop-container \[contenteditable='true'\]:focus,\s*\.drag-drop-container \[contenteditable='true'\]:focus-visible\s*\{\s*outline: none !important;\s*box-shadow: none !important;/);
   assert.match(css, /div\[style\*='pointer-events: none'\]\[style\*='background-image:'\]\[style\*='background-repeat: repeat'\]\[style\*='print-color-adjust: exact'\]\s*\{\s*opacity: 0 !important;/);
   assert.doesNotMatch(css, /filter\s*:/);
   const header = fs.readFileSync(path.join(__dirname, '../userscript-header.txt'), 'utf8');
