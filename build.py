@@ -200,7 +200,8 @@ def main() -> int:
     print(f"Script: FusionToolBox")
     print(f"Version: {version}")
     print(f"Output: {output_path}")
-    print("Next: paste the built file into https://greasyfork.org/zh-CN/script_versions/new")
+    print("Next: open https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox and choose Update.")
+    print("Verify script ID 580054 before and after publishing; never use the generic new-script page.")
     return 0
 
 

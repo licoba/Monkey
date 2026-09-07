@@ -124,12 +124,13 @@ py .\build.py --output .\dist\FusionToolBox.user.js
 
 1. 确认 `userscript-header.txt` 里的 `@version` 已递增
 2. 运行 `py .\build.py`
-3. 打开 <https://greasyfork.org/zh-CN/script_versions/new>
-4. 粘贴 `FusionToolBox.user.js` 内容并提交
+3. 打开[主脚本页面](https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox)，从该页面进入“更新”或“发布新版本”
+4. 确认更新表单属于脚本 ID `580054`，再上传 `FusionToolBox.user.js` 并提交
+5. 发布后核对返回页面的脚本 ID 仍为 `580054`，并验证线上版本和代码
 
-这个页面就是 Greasy Fork 当前的“发布新脚本”入口；如果未登录，会先跳转到登录页。
+禁止使用通用 `/script_versions/new` 入口更新已有脚本：该入口会创建新的脚本记录，即使名称和 namespace 相同也不能替代主脚本更新。
 
-后续每次发新版本也按这个流程走。
+后续版本始终发布到 `580054`。若登录发生跳转，登录后重新从主脚本页面进入更新表单。
 
 版本号以 `userscript-header.txt` 为准，构建时会自动同步到发布文件里的 `FUSION_TOOLBOX_VERSION`。
 

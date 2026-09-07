@@ -46,6 +46,14 @@ generated userscript.
 
 ## Greasy Fork Publishing
 
+- The canonical script ID is `580054`, owned by `licoba` (user ID `227261`).
+- Start updates from `https://greasyfork.org/zh-CN/scripts/580054-fusiontoolbox`
+  and use its update/new-version link. Never use the generic
+  `/script_versions/new` page, which creates a separate script.
+- Verify that the update form belongs to script `580054` before submitting.
+  After a login redirect, return to the canonical script page first.
+- After publishing, verify the returned script ID is still `580054`, in addition
+  to checking the version and content. A matching name is not sufficient.
 - A local installation delivery does not by itself authorize a Greasy Fork
   publication.
 - When a release includes Greasy Fork publishing, complete and verify the local
