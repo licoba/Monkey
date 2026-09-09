@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../sites/ai.eaglelab.tcl.com.js'), 'utf8');
 
 test('enables the theme across EagleLab routes without matching other TCL hosts', () => {
-  for (const hash of ['#/assistant', '#/settings', '#/models', '#/agents']) {
+  for (const hash of ['#/assistant', '#/settings', '#/models', '#/agents', '#/apikey']) {
     const module = vm.runInNewContext(`(${source})`, {
       location: { hostname: 'ai.eaglelab.tcl.com', hash },
     });
@@ -16,6 +16,24 @@ test('enables the theme across EagleLab routes without matching other TCL hosts'
   for (const hostname of ['eaglelab.tcl.com', 'other.tcl.com', 'ai.eaglelab.tcl.com.example.org']) {
     const module = vm.runInNewContext(`(${source})`, { location: { hostname } });
     assert.equal(module.match(), false);
+  }
+});
+
+test('themes API usage cards, labels and chart borders using neutral utilities', () => {
+  let css;
+  vm.runInNewContext(`(${source})`, {
+    Utils: { addStyle: (_id, value) => { css = value; } },
+  }).run();
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  for (const [classes, declaration] of [
+    [['bg-neutral-50', 'bg-neutral-100'], 'background-color: var(--fusion-eagle-surface) !important'],
+    [['text-neutral-600', 'text-neutral-500', 'text-neutral-400'], 'color: var(--fusion-eagle-muted) !important'],
+    [['border-neutral-200'], 'border-color: var(--fusion-eagle-border) !important'],
+  ]) {
+    for (const className of classes) {
+      assert.ok(rules.some(([, selectors, body]) =>
+        selectors.includes(`[class~='${className}']`) && body.includes(declaration)), className);
+    }
   }
 });
 

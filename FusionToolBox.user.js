@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.50
+// @version      0.1.51
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -34,7 +34,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.50';
+  const FUSION_TOOLBOX_VERSION = '0.1.51';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -251,7 +251,8 @@
       .el-card, .el-upload-dragger, .el-input__wrapper,
       .el-select__wrapper, .el-textarea__inner,
       .welcome-model-dialog .el-dialog__headerbtn,
-      [class~='bg-white'], [class~='bg-gray-50'], [class~='bg-gray-100'] {
+      [class~='bg-white'], [class~='bg-gray-50'], [class~='bg-gray-100'],
+      [class~='bg-neutral-50'], [class~='bg-neutral-100'] {
         background-color: var(--fusion-eagle-surface) !important;
         color: var(--fusion-eagle-text) !important;
         border-color: var(--fusion-eagle-border) !important;
@@ -277,11 +278,13 @@
       .el-dialog__title, .el-message-box__title, .el-radio__label,
       .el-checkbox__label, .el-input__inner, .el-select__placeholder,
       [contenteditable='true'], [class~='text-black'],
-      [class~='text-gray-900'], [class~='text-gray-800'], [class~='text-gray-700'] {
+      [class~='text-gray-900'], [class~='text-gray-800'], [class~='text-gray-700'],
+      [class~='text-neutral-900'], [class~='text-neutral-800'], [class~='text-neutral-700'] {
         color: var(--fusion-eagle-text) !important;
       }
       .privacy-desc, .menu-item-desc, .menu-group-header,
       [class~='text-gray-600'], [class~='text-gray-500'], [class~='text-gray-400'],
+      [class~='text-neutral-600'], [class~='text-neutral-500'], [class~='text-neutral-400'],
       [class~='text-black/40'], [class~='text-black/50'], [class~='text-black/60'] {
         color: var(--fusion-eagle-muted) !important;
       }
@@ -344,6 +347,7 @@
         --el-button-hover-border-color: #5f7aff;
       }
       [class~='border-gray-200'], [class~='border-gray-100'],
+      [class~='border-neutral-200'], [class~='border-neutral-100'],
       [class~='border-[#f0f0f0]'], .file-item, .drag-drop-container {
         border-color: var(--fusion-eagle-border) !important;
       }
