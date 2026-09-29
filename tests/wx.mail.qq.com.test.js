@@ -114,3 +114,17 @@ test('themes compose chrome without rewriting editable message content', () => {
   }
   assert.doesNotMatch(css, /\.mail-compose-page\s+\*\s*\{/);
 });
+
+test('themes the send button pseudo-element for enabled and disabled states', () => {
+  const { module, styles } = runModule();
+  module.run();
+  const rules = [...styles[0].cssText.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  const rule = selector => rules.find(([, targets]) => targets.replace(/\/\*[\s\S]*?\*\//g, '').trim() === selector)?.[2];
+  const enabled = rule('.mail-compose-page .mail-compose-header .xmail-ui-btn.ui-btn-them-blue-lighten');
+  const disabled = rule('.mail-compose-page .mail-compose-header .ui-btn-them-blue-lighten.ui-btn-disabled');
+  for (const [property, color] of [['front-bg', '#2878d8'], ['hover-front-bg', '#3388e8'], ['active-front-bg', '#226bc2']]) {
+    assert.ok(enabled.includes(`--${property}: ${color} !important;`));
+    assert.ok(disabled.includes(`--${property}: var(--fusion-qqmail-panel) !important;`));
+  }
+  assert.doesNotMatch(styles[0].cssText, /pointer-events:\s*auto/);
+});

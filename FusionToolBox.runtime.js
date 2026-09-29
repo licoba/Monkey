@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.53';
+  const FUSION_TOOLBOX_VERSION = '0.1.54';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -2595,6 +2595,39 @@
 
       .mail-compose-page .xmail-ui-btn.ui-btn-disabled {
         background: var(--fusion-qqmail-panel) !important;
+      }
+
+      /* QQ Mail paints button states on a pseudo-element above the base background. */
+      .mail-compose-page .mail-compose-header .xmail-ui-btn.ui-btn-them-blue-lighten {
+        --front-bg: #2878d8 !important;
+        --hover-front-bg: #3388e8 !important;
+        --active-front-bg: #226bc2 !important;
+        border-color: #3989e8 !important;
+      }
+
+      .mail-compose-page .mail-compose-header .ui-btn-them-blue-lighten .ui-btn-text,
+      .mail-compose-page .mail-compose-header .ui-btn-them-blue-lighten .ui-btn-icon {
+        color: #ffffff !important;
+      }
+
+      .mail-compose-page .xmail-ui-btn.ui-btn-disabled {
+        --front-bg: var(--fusion-qqmail-panel) !important;
+        --hover-front-bg: var(--fusion-qqmail-panel) !important;
+        --active-front-bg: var(--fusion-qqmail-panel) !important;
+      }
+
+      .mail-compose-page .mail-compose-header .ui-btn-them-blue-lighten.ui-btn-disabled {
+        --front-bg: var(--fusion-qqmail-panel) !important;
+        --hover-front-bg: var(--fusion-qqmail-panel) !important;
+        --active-front-bg: var(--fusion-qqmail-panel) !important;
+        border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-compose-page .xmail-ui-btn.ui-btn-disabled .ui-btn-text,
+      .mail-compose-page .xmail-ui-btn.ui-btn-disabled .ui-btn-icon,
+      .mail-compose-page .mail-compose-header .ui-btn-them-blue-lighten.ui-btn-disabled .ui-btn-text,
+      .mail-compose-page .mail-compose-header .ui-btn-them-blue-lighten.ui-btn-disabled .ui-btn-icon {
+        color: var(--fusion-qqmail-muted) !important;
       }
 
       .mail-compose-page .cmp-sender-email,
