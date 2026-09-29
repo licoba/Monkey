@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.52
+// @version      0.1.53
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -34,7 +34,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.52';
+  const FUSION_TOOLBOX_VERSION = '0.1.53';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -2583,6 +2583,68 @@
       [class*='compose'][class*='content'] {
         background: var(--fusion-qqmail-bg) !important;
         color: var(--fusion-qqmail-text) !important;
+      }
+
+      .mail-compose-page .mail-compose-receivers,
+      .mail-compose-page .mail-compose-subject,
+      .mail-compose-page .toolbar-border-bottom-cover {
+        background: var(--fusion-qqmail-bg) !important;
+      }
+
+      .mail-compose-page .mail-compose-editor-format-bar,
+      .mail-compose-page .xmail-ui-split-btn {
+        background: var(--fusion-qqmail-panel-raised) !important;
+        border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-compose-page .receiver-editor-wrap,
+      .mail-compose-page .mail-compose-subject,
+      .mail-compose-page .ui-split-btn-right {
+        border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-compose-page .mail-compose-field-label,
+      .mail-compose-page .xmail-ui-split-btn,
+      .mail-compose-page .ui-split-btn-left,
+      .mail-compose-page .ui-split-btn-right,
+      .mail-compose-page .ui-split-btn-text,
+      .mail-compose-page .sender-label,
+      .mail-compose-page .cmp-sender-name,
+      .mail-compose-page .cmp-account-items,
+      .mail-compose-page .cmp-account-group-name,
+      .mail-compose-page .cmp-group-name,
+      .mail-compose-page .cmp-account-item {
+        color: var(--fusion-qqmail-text) !important;
+      }
+
+      .mail-compose-page xm-signature .businessCard_name {
+        color: var(--fusion-qqmail-text) !important;
+      }
+
+      .mail-compose-page xm-signature .businessCard_mail,
+      .mail-compose-page .xmail-ui-btn.ui-btn-disabled {
+        color: var(--fusion-qqmail-muted) !important;
+      }
+
+      .mail-compose-page .xmail-ui-btn.ui-btn-disabled {
+        background: var(--fusion-qqmail-panel) !important;
+      }
+
+      .mail-compose-page .cmp-sender-email,
+      .mail-compose-page .cmp-email-symbol,
+      .mail-compose-page .cmp-email-text,
+      .mail-compose-page .cmp-histories-expand {
+        color: var(--fusion-qqmail-muted) !important;
+      }
+
+      .mail-compose-page .btn-divider {
+        background: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-compose-page .ui-split-btn-left:hover,
+      .mail-compose-page .ui-split-btn-right:hover,
+      .mail-compose-page .xmail-ui-panel-item:hover {
+        background: var(--fusion-qqmail-hover) !important;
       }
 
       .xmail-ui-float-scroll-bar,

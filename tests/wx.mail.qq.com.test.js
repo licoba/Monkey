@@ -90,3 +90,27 @@ test('injects a complete dark theme for QQ Mail surfaces and controls', () => {
   }
   assert.match(styles[0].cssText, /\*:focus-visible/);
 });
+
+test('themes compose chrome without rewriting editable message content', () => {
+  const { module, styles } = runModule();
+  module.run();
+  const css = styles[0].cssText;
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  for (const [selectors, declaration] of [
+    [['.mail-compose-page .mail-compose-receivers', '.mail-compose-page .mail-compose-subject',
+      '.mail-compose-page .toolbar-border-bottom-cover'], 'background: var(--fusion-qqmail-bg) !important;'],
+    [['.mail-compose-page .mail-compose-editor-format-bar', '.mail-compose-page .xmail-ui-split-btn'],
+      'background: var(--fusion-qqmail-panel-raised) !important;'],
+    [['.mail-compose-page .mail-compose-field-label', '.mail-compose-page .ui-split-btn-text',
+      '.mail-compose-page .sender-label', '.mail-compose-page .cmp-sender-name',
+      '.mail-compose-page .cmp-group-name', '.mail-compose-page xm-signature .businessCard_name'], 'color: var(--fusion-qqmail-text) !important;'],
+    [['.mail-compose-page .cmp-sender-email', '.mail-compose-page .cmp-histories-expand'],
+      'color: var(--fusion-qqmail-muted) !important;'],
+  ]) {
+    for (const selector of selectors) {
+      assert.ok(rules.some(([, targets, body]) =>
+        targets.split(',').map(s => s.trim()).includes(selector) && body.includes(declaration)), selector);
+    }
+  }
+  assert.doesNotMatch(css, /\.mail-compose-page\s+\*\s*\{/);
+});
