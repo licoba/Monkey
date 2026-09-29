@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.51
+// @version      0.1.52
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -34,7 +34,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.51';
+  const FUSION_TOOLBOX_VERSION = '0.1.52';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -2380,6 +2380,35 @@
         background: var(--fusion-qqmail-panel-raised) !important;
         color: var(--fusion-qqmail-text) !important;
         border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-detail-attaches .attaches-total,
+      .mail-detail-attach-card .attach-name-wrap,
+      .mail-detail-attach-card .name-wrap,
+      .mail-detail-attach-card .attach-name,
+      .mail-detail-attach-card .attach-suffix {
+        color: var(--fusion-qqmail-text) !important;
+      }
+
+      .mail-detail-attach-card .attach-size,
+      .mail-detail-attach-card .attach-size-num {
+        color: var(--fusion-qqmail-muted) !important;
+      }
+
+      .mail-detail-attach-card {
+        background: var(--fusion-qqmail-panel) !important;
+        border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-detail-attach-card:hover {
+        background: var(--fusion-qqmail-hover) !important;
+      }
+
+      .mail-detail-subject .session-count,
+      .mail-session-count,
+      .gg-unread-count {
+        color: var(--fusion-qqmail-muted) !important;
+        background: var(--fusion-qqmail-panel-raised) !important;
       }
 
       .mail-detail-alert-bar .alert-text {

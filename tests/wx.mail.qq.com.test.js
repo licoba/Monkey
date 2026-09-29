@@ -29,6 +29,38 @@ test('matches only the new QQ Mail host', () => {
   assert.equal(runModule('mail.qq.com').module.match(), false);
 });
 
+test('keeps attachment metadata and conversation badges legible on dark surfaces', () => {
+  const { module, styles } = runModule();
+  module.run();
+  const rules = [...styles[0].cssText.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  for (const [selectors, color] of [
+    [['.mail-detail-attaches .attaches-total', '.mail-detail-attach-card .attach-name-wrap',
+      '.mail-detail-attach-card .name-wrap', '.mail-detail-attach-card .attach-name',
+      '.mail-detail-attach-card .attach-suffix'], 'text'],
+    [['.mail-detail-attach-card .attach-size', '.mail-detail-attach-card .attach-size-num',
+      '.mail-detail-subject .session-count', '.mail-session-count', '.gg-unread-count'], 'muted'],
+  ]) {
+    for (const selector of selectors) {
+      assert.ok(rules.some(([, targets, body]) =>
+        targets.split(',').map(s => s.trim()).includes(selector) &&
+        body.includes(`color: var(--fusion-qqmail-${color}) !important;`)), selector);
+    }
+  }
+  const luminance = hex => {
+    const rgb = hex.match(/\w\w/g).map(v => parseInt(v, 16) / 255)
+      .map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+    return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
+  };
+  const palette = Object.fromEntries([...styles[0].cssText.matchAll(/--fusion-qqmail-([\w-]+): #([\da-f]{6});/g)]
+    .map(([, name, hex]) => [name, luminance(hex)]));
+  for (const foreground of ['text', 'muted']) {
+    for (const background of ['bg', 'panel', 'panel-raised', 'hover']) {
+      assert.ok((palette[foreground] + 0.05) / (palette[background] + 0.05) >= 4.5,
+        `${foreground} on ${background} must meet WCAG AA text contrast`);
+    }
+  }
+});
+
 test('injects a complete dark theme for QQ Mail surfaces and controls', () => {
   const { module, styles } = runModule();
 

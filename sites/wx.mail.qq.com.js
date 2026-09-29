@@ -142,6 +142,35 @@
         border-color: var(--fusion-qqmail-border) !important;
       }
 
+      .mail-detail-attaches .attaches-total,
+      .mail-detail-attach-card .attach-name-wrap,
+      .mail-detail-attach-card .name-wrap,
+      .mail-detail-attach-card .attach-name,
+      .mail-detail-attach-card .attach-suffix {
+        color: var(--fusion-qqmail-text) !important;
+      }
+
+      .mail-detail-attach-card .attach-size,
+      .mail-detail-attach-card .attach-size-num {
+        color: var(--fusion-qqmail-muted) !important;
+      }
+
+      .mail-detail-attach-card {
+        background: var(--fusion-qqmail-panel) !important;
+        border-color: var(--fusion-qqmail-border) !important;
+      }
+
+      .mail-detail-attach-card:hover {
+        background: var(--fusion-qqmail-hover) !important;
+      }
+
+      .mail-detail-subject .session-count,
+      .mail-session-count,
+      .gg-unread-count {
+        color: var(--fusion-qqmail-muted) !important;
+        background: var(--fusion-qqmail-panel-raised) !important;
+      }
+
       .mail-detail-alert-bar .alert-text {
         color: var(--fusion-qqmail-text) !important;
       }
