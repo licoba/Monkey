@@ -57,6 +57,15 @@ class FakeElement {
     return [this.ownText, ...this.children.map((child) => child.textContent)].join('');
   }
 
+  closest() {
+    let current = this;
+    while (current) {
+      if (current.tagName === 'ARTICLE') return current;
+      current = current.parentElement;
+    }
+    return null;
+  }
+
   getBoundingClientRect() {
     return {
       ...this.rect,
@@ -244,4 +253,29 @@ test('hides a quota banner whose text is populated after its container is mounte
   runtime.notifyTextChanged(heading);
 
   assert.equal(root.style.get('display'), 'none');
+});
+
+test('hides the exhausted workspace credits banner including its action', () => {
+  const document = new FakeDocument();
+  const { root, content, heading, action } = createQuotaBanner();
+  heading.ownText = '工作空间额度已耗尽';
+  content.ownText = '开启自动充值，即可自动添加额度，避免今后使用中断。';
+  action.ownText = '启用自动充值';
+  document.body.append(root);
+  runModule(document);
+  assert.equal(root.style.get('display'), 'none');
+  assert.equal(action.style.get('display'), undefined);
+});
+
+test('preserves a conversation quoting the exhausted banner even near the top', () => {
+  const document = new FakeDocument();
+  const article = new FakeElement('article');
+  const { root, content, heading } = createQuotaBanner();
+  heading.ownText = '工作空间额度已耗尽';
+  content.ownText = '开启自动充值，即可自动添加额度，避免今后使用中断。';
+  article.append(root);
+  document.body.append(article);
+  runModule(document);
+  assert.equal(root.style.get('display'), undefined);
+  assert.equal(article.style.get('display'), undefined);
 });

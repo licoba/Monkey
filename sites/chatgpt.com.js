@@ -4,7 +4,7 @@
     return location.hostname === 'chatgpt.com';
   },
   run() {
-    const headingPattern = /工作区有成员达到使用上限/;
+    const headingPattern = /工作区有成员达到使用上限|工作(?:空间|区)额度已耗尽/;
     const detailPattern = /开启自动充值|系统会自动补充额度/;
     const normalizeText = (value) => value.replace(/\s+/g, ' ').trim();
 
@@ -76,7 +76,7 @@
         const text = normalizeText(textNode.nodeValue || '');
         const parent = textNode.parentElement;
 
-        if (parent && headingPattern.test(text) && isCompactTopBanner(parent)) {
+        if (parent && !parent.closest('[data-message-author-role], [data-testid^="conversation-turn-"], article') && headingPattern.test(text) && isCompactTopBanner(parent)) {
           const banner = findBannerContainer(parent);
 
           if (banner) {
