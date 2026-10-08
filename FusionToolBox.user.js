@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.55
+// @version      0.1.56
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -25,6 +25,7 @@
 // @match        https://wx.mail.qq.com/*
 // @match        https://ai.eaglelab.tcl.com/*
 // @match        https://chatgpt.com/*
+// @match        https://eternity4719.github.io/HowToLiveBetter/*
 // @run-at       document-start
 // @grant        none
 // @license      MIT
@@ -34,7 +35,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.55';
+  const FUSION_TOOLBOX_VERSION = '0.1.56';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -507,6 +508,21 @@
         characterData: true,
       });
     });
+  },
+},
+{
+  name: 'howtolivebetter-hide-sidebar-ad',
+  match() {
+    return (
+      location.hostname === 'eternity4719.github.io' &&
+      location.pathname.startsWith('/HowToLiveBetter/')
+    );
+  },
+  run() {
+    Utils.addStyle(
+      'fusion-toolbox-howtolivebetter-hide-sidebar-ad',
+      '#sidebar > .group.ad { display: none !important; }'
+    );
   },
 },
 {

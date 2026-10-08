@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.55';
+  const FUSION_TOOLBOX_VERSION = '0.1.56';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -474,6 +474,21 @@
         characterData: true,
       });
     });
+  },
+},
+{
+  name: 'howtolivebetter-hide-sidebar-ad',
+  match() {
+    return (
+      location.hostname === 'eternity4719.github.io' &&
+      location.pathname.startsWith('/HowToLiveBetter/')
+    );
+  },
+  run() {
+    Utils.addStyle(
+      'fusion-toolbox-howtolivebetter-hide-sidebar-ad',
+      '#sidebar > .group.ad { display: none !important; }'
+    );
   },
 },
 {
