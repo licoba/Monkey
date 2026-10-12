@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.56
+// @version      0.1.57
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -19,6 +19,8 @@
 // @match        https://finance.sina.com.cn/*
 // @match        https://v2ex.com/*
 // @match        https://www.v2ex.com/*
+// @match        https://guozaoke.com/*
+// @match        https://www.guozaoke.com/*
 // @match        https://www.nodeseek.com/*
 // @match        https://www.tampermonkey.net/scripts.php*
 // @match        https://mail.chatgpt.org.uk/*
@@ -35,7 +37,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.56';
+  const FUSION_TOOLBOX_VERSION = '0.1.57';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -773,6 +775,55 @@
 
         hide(node);
       });
+    });
+  },
+},
+{
+  name: 'guozaoke-hide-ads',
+  match() {
+    return location.hostname === 'guozaoke.com' || location.hostname === 'www.guozaoke.com';
+  },
+  run() {
+    const selector = [
+      '.sidebox:has(> .ui-content.ad)',
+      '.google-auto-placed',
+      'ins.adsbygoogle',
+    ].join(',');
+
+    Utils.addStyle(
+      'fusion-toolbox-guozaoke-hide-ads',
+      `${selector} { display: none !important; }
+      html:has(ins.adsbygoogle[data-anchor-status]) body {
+        padding-bottom: 0 !important;
+      }`
+    );
+
+    const hide = (element) => {
+      // Google side rails use inline !important styles and may restore them.
+      if (element.style.getPropertyValue('display') !== 'none' ||
+          element.style.getPropertyPriority('display') !== 'important') {
+        element.style.setProperty('display', 'none', 'important');
+      }
+    };
+    const scan = (root) => {
+      if (root.matches?.(selector)) hide(root);
+      for (const element of root.querySelectorAll?.(selector) || []) hide(element);
+    };
+
+    scan(document);
+    new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'attributes') {
+          if (mutation.target.matches(selector)) hide(mutation.target);
+        } else {
+          for (const node of mutation.addedNodes) scan(node);
+        }
+      }
+    }).observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style'],
     });
   },
 },
