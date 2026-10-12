@@ -222,6 +222,7 @@
       '.google-auto-placed',
       'ins.adsbygoogle',
       '.fc-dns-dialog:has(.fc-dns-link)',
+      '.ipr-container:has(> .ipr-button)',
     ].join(',');
 
     Utils.addStyle(
@@ -242,22 +243,45 @@
     const scan = (root) => {
       if (root.matches?.(selector)) hide(root);
       for (const element of root.querySelectorAll?.(selector) || []) hide(element);
+      for (const element of [root, ...(root.querySelectorAll?.('*') || [])]) {
+        if (element.shadowRoot) watchShadowRoot(element.shadowRoot);
+      }
     };
-
-    scan(document);
-    new MutationObserver((mutations) => {
+    const onMutations = (mutations) => {
       for (const mutation of mutations) {
+        const container = mutation.target?.closest?.(selector);
+        if (container) hide(container);
         if (mutation.type === 'attributes') {
           if (mutation.target.matches(selector)) hide(mutation.target);
+          if (mutation.target.shadowRoot) watchShadowRoot(mutation.target.shadowRoot);
         } else {
           for (const node of mutation.addedNodes) scan(node);
         }
       }
-    }).observe(document.documentElement, {
+    };
+    const observerOptions = {
       childList: true,
       subtree: true,
       attributes: true,
       attributeFilter: ['class', 'style'],
-    });
+    };
+    const watchedRoots = new WeakSet();
+    const watchShadowRoot = (root) => {
+      if (watchedRoots.has(root)) return;
+      watchedRoots.add(root);
+      new MutationObserver(onMutations).observe(root, observerOptions);
+      scan(root);
+    };
+
+    scan(document);
+    new MutationObserver(onMutations).observe(document.documentElement, observerOptions);
+
+    // AdSense can attach a shadow root after mounting its anonymous footer host.
+    // Shadow attachment itself does not produce a document mutation.
+    setInterval(() => {
+      for (const host of document.querySelectorAll('body > .container > div')) {
+        if (host.shadowRoot) watchShadowRoot(host.shadowRoot);
+      }
+    }, 1000);
   },
 }
