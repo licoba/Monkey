@@ -41,10 +41,12 @@ test('hides existing and late ads, resists inline overrides, and avoids observer
   let options;
   let css;
   let avatarCss;
+  let themeCss;
   vm.runInNewContext(`(${source})`, {
     document: { documentElement: {}, querySelectorAll: () => [existing] },
     Utils: { addStyle: (id, text) => {
       if (id.endsWith('hide-avatars')) avatarCss = text;
+      else if (id.endsWith('reading-theme')) themeCss = text;
       else css = text;
     } },
     MutationObserver: class {
@@ -53,6 +55,11 @@ test('hides existing and late ads, resists inline overrides, and avoids observer
     },
   }).run();
   assert.equal(existing.style.getPropertyValue('display'), 'none');
+  assert.ok(themeCss.includes('--ft-gzk-line: rgba(220, 228, 240, .08)'));
+  assert.ok(themeCss.includes('html body .topic-tags .tag-badge'));
+  assert.ok(themeCss.includes('html body .hot-topics .title { border-bottom: 0 !important; }'));
+  assert.ok(themeCss.includes(':focus-visible'));
+  assert.ok(themeCss.includes('@media (max-width: 767px)'));
   assert.ok(avatarCss.includes('a.avatar[href^="/u/"]'));
   assert.ok(avatarCss.includes('a[href^="/u/"]:has(> img.avatar:only-child)'));
   assert.match(avatarCss, /\.topic-item > \.main,[\s\S]*\.reply-item > \.main,[\s\S]*padding-left: 0 !important/);
