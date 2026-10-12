@@ -40,15 +40,22 @@ test('hides existing and late ads, resists inline overrides, and avoids observer
   let callback;
   let options;
   let css;
+  let avatarCss;
   vm.runInNewContext(`(${source})`, {
     document: { documentElement: {}, querySelectorAll: () => [existing] },
-    Utils: { addStyle: (_id, text) => { css = text; } },
+    Utils: { addStyle: (id, text) => {
+      if (id.endsWith('hide-avatars')) avatarCss = text;
+      else css = text;
+    } },
     MutationObserver: class {
       constructor(fn) { callback = fn; }
       observe(_root, config) { options = config; }
     },
   }).run();
   assert.equal(existing.style.getPropertyValue('display'), 'none');
+  assert.ok(avatarCss.includes('a.avatar[href^="/u/"]'));
+  assert.ok(avatarCss.includes('a[href^="/u/"]:has(> img.avatar:only-child)'));
+  assert.match(avatarCss, /\.topic-item > \.main,[\s\S]*\.reply-item > \.main,[\s\S]*padding-left: 0 !important/);
   assert.match(css, /\.sidebox:has\(> \.ui-content\.ad\)/);
   assert.ok(css.includes('.fc-dns-dialog:has(.fc-dns-link)'));
   assert.match(css, /data-anchor-status[\s\S]*padding-bottom: 0 !important/);

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.58';
+  const FUSION_TOOLBOX_VERSION = '0.1.59';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -748,6 +748,20 @@
     return location.hostname === 'guozaoke.com' || location.hostname === 'www.guozaoke.com';
   },
   run() {
+    Utils.addStyle(
+      'fusion-toolbox-guozaoke-hide-avatars',
+      `img.avatar,
+      a.avatar[href^="/u/"],
+      a[href^="/u/"]:has(> img.avatar:only-child) {
+        display: none !important;
+      }
+      .topic-item > .main,
+      .reply-item > .main,
+      .ui-header:has(> a > img.avatar) > .main {
+        padding-left: 0 !important;
+      }`
+    );
+
     const selector = [
       '.sidebox:has(> .ui-content.ad)',
       '.google-auto-placed',
