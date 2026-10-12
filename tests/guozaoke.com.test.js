@@ -60,6 +60,10 @@ test('hides existing and late ads, resists inline overrides, and avoids observer
   assert.ok(themeCss.includes('html body .hot-topics .title { border-bottom: 0 !important; }'));
   assert.ok(themeCss.includes(':focus-visible'));
   assert.ok(themeCss.includes('@media (max-width: 767px)'));
+  assert.ok(themeCss.includes('--ft-gzk-gap-sm: 8px'));
+  assert.ok(themeCss.includes('--ft-gzk-gap-md: 16px'));
+  assert.ok(themeCss.includes('--ft-gzk-gap-lg: 24px'));
+  assert.ok(themeCss.includes('padding-right: 40px !important'));
   assert.ok(avatarCss.includes('a.avatar[href^="/u/"]'));
   assert.ok(avatarCss.includes('a[href^="/u/"]:has(> img.avatar:only-child)'));
   assert.match(avatarCss, /\.topic-item > \.main,[\s\S]*\.reply-item > \.main,[\s\S]*padding-left: 0 !important/);
