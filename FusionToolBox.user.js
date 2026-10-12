@@ -2,7 +2,7 @@
 // @name         FusionToolBox
 // @name:zh-CN   FusionToolBox 聚合工具箱
 // @namespace    https://github.com/licoba/Monkey
-// @version      0.1.57
+// @version      0.1.58
 // @description  Personal FusionToolBox userscript with per-site modules.
 // @description:zh-CN  带有按站点模块的个人 FusionToolBox 用户脚本。
 // @author       Codex
@@ -37,7 +37,7 @@
 (function () {
   'use strict';
 
-  const FUSION_TOOLBOX_VERSION = '0.1.57';
+  const FUSION_TOOLBOX_VERSION = '0.1.58';
 
   const Utils = {
     addStyle(id, cssText) {
@@ -788,6 +788,7 @@
       '.sidebox:has(> .ui-content.ad)',
       '.google-auto-placed',
       'ins.adsbygoogle',
+      '.fc-dns-dialog:has(.fc-dns-link)',
     ].join(',');
 
     Utils.addStyle(

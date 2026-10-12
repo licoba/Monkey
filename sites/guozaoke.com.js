@@ -8,6 +8,7 @@
       '.sidebox:has(> .ui-content.ad)',
       '.google-auto-placed',
       'ins.adsbygoogle',
+      '.fc-dns-dialog:has(.fc-dns-link)',
     ].join(',');
 
     Utils.addStyle(

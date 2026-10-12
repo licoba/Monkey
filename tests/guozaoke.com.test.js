@@ -50,6 +50,7 @@ test('hides existing and late ads, resists inline overrides, and avoids observer
   }).run();
   assert.equal(existing.style.getPropertyValue('display'), 'none');
   assert.match(css, /\.sidebox:has\(> \.ui-content\.ad\)/);
+  assert.ok(css.includes('.fc-dns-dialog:has(.fc-dns-link)'));
   assert.match(css, /data-anchor-status[\s\S]*padding-bottom: 0 !important/);
   assert.equal(options.subtree, true);
   const late = makeElement(true);
